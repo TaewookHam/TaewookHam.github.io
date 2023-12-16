@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: Attention Is All You Need
 description: >
   We propose a new simple network architecture, the Transformer, 
