@@ -17,6 +17,8 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 
 ## Getting started
+* [Transformer]{:.heading.flip-title} --- Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
+
 * [Install]{:.heading.flip-title} --- How to install and run Hydejack.
 * [Upgrade]{:.heading.flip-title} --- You can skip this if you haven't used Hydejack before.
 * [Config]{:.heading.flip-title} --- Once Jekyll is running you can start editing your config file.
@@ -36,6 +38,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 * [CHANGELOG]{:.heading.flip-title} --- Version history of Hydejack.
 {:.related-posts.faded}
 
+[Transformer]: Transformer.md
 [install]: install.md
 [upgrade]: upgrade.md
 [config]: config.md
