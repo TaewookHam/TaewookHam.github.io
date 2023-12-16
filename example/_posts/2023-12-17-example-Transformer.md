@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Attention Is All You Need
-
+image: 
+  path: /assets/img/blog/jeremy-bishop@0,5x.jpg
 description: >
   We propose a new simple network architecture, the Transformer, 
   based solely on attention mechanisms, 
