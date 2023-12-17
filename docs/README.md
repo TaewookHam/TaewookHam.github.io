@@ -47,7 +47,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 * [CHANGELOG]{:.heading.flip-title} --- Version history of Hydejack.
 {:.related-posts.faded}
 
-[Transformer]: Transformer.md
+[NeuMF]: NeuMF.md
 [install]: install.md
 [upgrade]: upgrade.md
 [config]: config.md
