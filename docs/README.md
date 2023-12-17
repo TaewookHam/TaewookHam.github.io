@@ -1,9 +1,9 @@
 ---
 layout: page
-title: Documentation
+title: Paper Review
 description: >
-  Here you should be able to find everything you need to know to accomplish the most common tasks when blogging with Hydejack.
-hide_description: true
+  Read & Write & Review the Papers
+hide_description: false
 sitemap: false
 permalink: /docs/
 ---
@@ -16,15 +16,24 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 {:.note}
 
 
-## Getting started
-* [Transformer]{:.heading.flip-title} --- Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin
+## Graphs
+
 
 * [Install]{:.heading.flip-title} --- How to install and run Hydejack.
 * [Upgrade]{:.heading.flip-title} --- You can skip this if you haven't used Hydejack before.
 * [Config]{:.heading.flip-title} --- Once Jekyll is running you can start editing your config file.
 {:.related-posts.faded}
 
-## Using Hydejack
+## Recommender Systems
+* [NeuMF]{:.heading.flip-title} --- Neural Collaborative Filtering
+* [Basics]{:.heading.flip-title} --- How to add different types of content.
+* [Writing]{:.heading.flip-title} --- Producing markdown content for Hydejack.
+* [Scripts]{:.heading.flip-title} --- How to include 3rd party scripts on your site.
+* [Build]{:.heading.flip-title} --- How to build the static files for deployment.
+* [Advanced]{:.heading.flip-title} --- Guides for more advanced tasks.
+{:.related-posts.faded}
+
+## VAEs
 * [Basics]{:.heading.flip-title} --- How to add different types of content.
 * [Writing]{:.heading.flip-title} --- Producing markdown content for Hydejack.
 * [Scripts]{:.heading.flip-title} --- How to include 3rd party scripts on your site.
