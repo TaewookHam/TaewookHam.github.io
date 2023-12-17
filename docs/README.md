@@ -18,6 +18,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 ## Graphs
 
+* [GAT]{:.heading.flip-title} --- Graph Attention Networks
 
 * [Install]{:.heading.flip-title} --- How to install and run Hydejack.
 * [Upgrade]{:.heading.flip-title} --- You can skip this if you haven't used Hydejack before.
@@ -48,6 +49,8 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 {:.related-posts.faded}
 
 [NeuMF]: NeuMF.md
+[GAT]: GAT.md
+
 [install]: install.md
 [upgrade]: upgrade.md
 [config]: config.md
