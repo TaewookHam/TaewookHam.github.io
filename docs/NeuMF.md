@@ -10,17 +10,14 @@ description: >
 sitemap: false
 ---
 
-협업 필터링이라고 하는 Collaborative filtering 에 Neural network 를 덧입히고자 하는 노력에서 나온 것이 이번 논문에서 소개하고 있는 NCF이다.
-
-Implicit feedback을 기반으로 하는 Collaboratvie Filtering는 사용자의 선호도를 잘 반영하지 못한다는 한계점이 있다.
+Collaborative filtering의 Linear하다는 한계점을 보완하기 위해서 Nonlinerity를 곁들인 Neural network 를 이용해서 Recommendation System 알고리즘을 새롭게 제시하고자 원문 논문에서 소개하고 있는 Neural Collaborative Filtering이다. 추천 시스템에서 사용하는 사용자 피드백은 크게 두 종류로 나뉘는데 첫번째는 implicit feedback(click, purchase, watch), 두번째는 explicit feedback(star rating) 이다. 
+Implicit feedback을 사용해 Collaboratvie Filtering을 적용한다면 사용자가 해당 아이템과 interaction이 있었다는 것을 시사하지만, 실제로 사용자가 그 물건을 좋아하는지 ,선호도를 잘 반영하지 못한다는 한계점이 있다.
 
 다음과 같이 M by N으로 구성된 User-Item interaction matrix Y가 있을 때,
-
 implicit feedback 이라 함은 1일 때 상호작용이 있었고 0일 때 상호작용이 없었다로 구분한다. 이때 binary number가 user의 선호도를 나타내지는 않는다고 한다.
-
 이러한 단점을 논문에서는 'noisy signal' 이 껴있다고 언급하고 있고, 관측되지 않은 부분의 선호도를 예측해 랭킹을 매겨야하는 추천시스템에서는 이러한 단점은 치명적일 수 밖에 없다.
 
-[##_Image|kage@uWkui/btsBXLq2xh8/lx1BmpKKgKlPYdCFfPk1TK/img.png|CDM|1.3|{"originWidth":1142,"originHeight":174,"style":"alignLeft","width":466,"height":71,"filename":"스크린샷 2023-12-13 오후 12.54.27.png"}_##]
+![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/cb040ade-5a2a-4d73-b8cf-fdc2dafc98c9)
 
 ### **2.1 Learning from Implicit Data**
 
