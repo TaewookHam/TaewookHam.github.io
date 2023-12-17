@@ -18,6 +18,7 @@ implicit feedback 이라 함은 1일 때 상호작용이 있었고 0일 때 상�
 이러한 단점을 논문에서는 'noisy signal' 이 껴있다고 언급하고 있고, 관측되지 않은 부분의 선호도를 예측해 랭킹을 매겨야하는 추천시스템에서는 이러한 단점은 치명적일 수 밖에 없다.
 
 ![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/cb040ade-5a2a-4d73-b8cf-fdc2dafc98c9)
+{: width="70%" height="50%"}
 
 ### **2.1 Learning from Implicit Data**
 
