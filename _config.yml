@@ -24,6 +24,13 @@ title:                 TaewookHam's GitHub Blog
 
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
+# Conversion
+markdown: kramdown
+highlighter: rouge
+;si: false
+excerpt_separator: “\n\n”
+Incremental: false
+
 description:           >
   Hydejack is a boutique Jekyll theme for hackers, nerds, and academics,
   with a focus on personal sites that are meant to impress.
@@ -158,6 +165,8 @@ defaults:
     values:
       seo:
         type:          WebPage
+
+
 
 kramdown:
   math_engine:         mathjax

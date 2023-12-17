@@ -1,12 +1,9 @@
 ---
 layout: page
-title: Attention Is All You Need
-image: 
-  path: https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/0b692673-43be-4185-a40c-ff828aa4cd75
+title: Neural Collaborative Filtering
 description: >
-  We propose a new simple network architecture, the Transformer, 
-  based solely on attention mechanisms, 
-  dispensing with recurrence and convolutions entirely.
+   In this work, we strive to develop techniques based on neural networks to tackle the key problem in recommendation -- collaborative filtering -- on the basis of implicit feedback.
+use_math: true
 sitemap: false
 ---
 
