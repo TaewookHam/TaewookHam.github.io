@@ -6,9 +6,9 @@ description: >
 use_math: true
 sitemap: false
 ---
+Collaborative Filtering은 추천시스템 알고리즘의 대표적인 예시이면서, 매우 훌륭한 성능을 보였던 알고리즘이다. 그러나 Matrix Factorization에 기반한 협업시스템은 Linear 하다는 한계점을 가지고 있었고, 이를 보완하기 위해서 논문의 저자들으 Neural network를 이용해서 Nonlinerity를 추천시스템에 적용했고 해당 알고리즘이 뛰어난 성능을 보였디. 이 알고리즘이 바로 Neural Collaborative Filtering이다. 
 
-Collaborative filtering의 Linear하다는 한계점을 보완하기 위해서 Nonlinerity를 곁들인 Neural network 를 이용해서 Recommendation System 알고리즘을 새롭게 제시하고자 원문 논문에서 소개하고 있는 Neural Collaborative Filtering이다. 추천 시스템에서 사용하는 사용자 피드백은 크게 두 종류로 나뉘는데 첫번째는 implicit feedback(click, purchase, watch), 두번째는 explicit feedback(star rating) 이다. 
-Implicit feedback을 사용해 Collaboratvie Filtering을 적용한다면 사용자가 해당 아이템과 interaction이 있었다는 것을 시사하지만, 실제로 사용자가 그 물건을 좋아하는지 ,선호도를 잘 반영하지 못한다는 한계점이 있다.
+추천 시스템에서 사용하는 사용자 피드백은 크게 두 종류로 나뉘는데 첫번째는 implicit feedback(click, purchase, watch), 두번째는 explicit feedback(star rating) 이다. Implicit feedback을 사용해 Collaboratvie Filtering을 적용한다면 사용자가 해당 아이템과 interaction이 있었다는 것을 시사하지만, 실제로 사용자가 그 물건을 좋아하는지 ,선호도를 잘 반영하지 못한다는 한계점이 있다. 해당 논문에서는 이 중 Implicit feedback을 이용해서 사용자와 아이템간의 연관이 있냐 없냐를 확률적으로 나타낸다.
 
 다음과 같이 M by N으로 구성된 User-Item interaction matrix Y가 있을 때,
 implicit feedback 이라 함은 1일 때 상호작용이 있었고 0일 때 상호작용이 없었다로 구분한다. 이때 binary number가 user의 선호도를 나타내지는 않는다고 한다.
