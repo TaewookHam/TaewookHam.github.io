@@ -27,7 +27,7 @@ title:                 TaewookHam's GitHub Blog
 # Conversion
 markdown: kramdown
 highlighter: rouge
-;si: false
+lsi: false
 excerpt_separator: “\n\n”
 Incremental: false
 
