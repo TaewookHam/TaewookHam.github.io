@@ -123,9 +123,9 @@ $
 모든 모든 시간 순번 t 에 대해서 그 다음 output을 예측한다. 여기서 조금 헷갈릴 수 있는데 $S_u$는 sequence item을 의미하고 t의 경우 그 sequence item 보다 먼저 나왔던 item t들(자기 자신도 포함)을 의미한다. 
 각 epoch 마다 각 순서에서 각 time step 마다 하나의 negative sample j를 만들어서 loss 계산에 포함시켰다
 ### *F. Complexity Analysis*
-- Space Complexity: 우리 모델에서 학습 가능한 parameter 수는 1)self attention, 2) FFN, 3) layer normalization 이고 space complexity 는 $O(|I|d + nd + d^2)$ 따른다. 이는 기존의 연구에 비해서 적고 d의 차원이 낮을 것을 고려하면 it does not grow with the number of users 이다.
+- Space Complexity: 우리 모델에서 학습 가능한 parameter 수는 (1)self attention, (2) FFN, (3) layer normalization 이고 space complexity 는 $O(|I|d + nd + d^2)$ 따른다. 이는 기존의 연구에 비해서 적고 d의 차원이 낮을 것을 고려하면 it does not grow with the number of users 이다.
 - Time Complexity: 계산 시간의 대부분은 attention 과 FNN layer 때문이다. 그리고 그 중 dominant한 부분은 attention이라고 이해할 수 있다 .따라서 시간 복잡도를 $O(n^2d + nd^2) $ ~ $O(n^2d)$로 나타낼 수 있다. attention은 어차피 병렬적으로 계산이 진행되기 때문에 우리의 모델은 RNN 기반의 $O(n)$보다 10배정도 빠른 계산성능을 보였다.
-- Handing Long Sequences: 유감스럽게도, 아주 긴 sequence에 대해서는 그닥 유효한 성능을 보이지 못했다고 한다. future work로 1) 시간적으로 가까운 곳에 attention 집중 2) long sequence를 쪼개서 처리 등을 제안했다.
+- Handing Long Sequences: 유감스럽게도, 아주 긴 sequence에 대해서는 그닥 유효한 성능을 보이지 못했다고 한다. future work로 (1) 시간적으로 가까운 곳에 attention 집중 (2) long sequence를 쪼개서 처리 등을 제안했다.
 
 
 ### *G. Discussion*
