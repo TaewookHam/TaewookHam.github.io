@@ -27,6 +27,8 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 ## Recommender Systems
 * [NeuMF]{:.heading.flip-title} --- Neural Collaborative Filtering
+* [SASRec]{:.heading.flip-title} --- Self-Attentive Sequential Recommendation
+
 * [Basics]{:.heading.flip-title} --- How to add different types of content.
 * [Writing]{:.heading.flip-title} --- Producing markdown content for Hydejack.
 * [Scripts]{:.heading.flip-title} --- How to include 3rd party scripts on your site.
@@ -50,6 +52,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 [NeuMF]: NeuMF.md
 [GAT]: GAT.md
+[SASRec]: SASRec.md
 
 [install]: install.md
 [upgrade]: upgrade.md
