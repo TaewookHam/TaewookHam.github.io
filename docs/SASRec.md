@@ -28,7 +28,8 @@ sitemap: false
 
 기본 세팅은 다음과 같다.
 
-Transform the Training Sequence, $(S^{u}_{1},S^{u}_{2},..S^{u}_{|S^{u}|-1}) $
+Transform the Training Sequence, 
+$(S^{u}_{1},S^{u}_{2},..S^{u}_{|S^{u}|-1})$
 
 into 
 
@@ -40,19 +41,21 @@ $s = (s_1,s_2,...s_n)$
 #### *Positional Encoding*
 Transformer에서 sequential input을 순서대로 받아들이지 않고 한 번에 위치 정보를 받아들이기 위한 방식으로 postion embedding P를 처음 input embedding layer에 더해준다.
 
-$\hat{E} = \begin{bmatrix}
+$\hat{E} = $ 
+$\begin{bmatrix}
 M_{s_1}+ P_1\\
 M_{s_2}+ P_2\\ 
 ...\\ 
 M_{s_n}+ P_4
 \end{bmatrix}
 $
+
 여기서 P는 learnable position embedding layer로서 원래의 transformer 논문에서 사용되었던 삼각함수를 사용한 fixed position embedding을 사용하려 했으나 자신들의 연구에서 성능을 저하시키는 것을 발견, learnable 한 방식을 채택하게 되었다.
 
 ### *B. Self Attention Block*
 Attention 과 마찬가지로 Q,K,V 값을 생성하고 Self attention layer에 통과시킨다.
 
-$ \textbf{S} = SA(\hat{E}) = Attention(\hat{E}W^Q,\hat{E}W^K,\hat{E}W^V) $
+$\textbf{S} = SA(\hat{E}) = Attention(\hat{E}W^{Q},\hat{E}W^{K},\hat{E}W^{V})$
 
 식이 가지는 의미를 간단하게 설명하자면, 
 1. Embedding layer를 각각 Key, Query, Value set으로 나눈다.
@@ -206,7 +209,9 @@ a부터 e군과의 비교가 non-deep model과의 비교, f부터 b군과의 비
 2. (b)&(c)를 비교했을 때는 PE을 넣어주었을 때 모델이 더 집중해야할 곳을 잘 캐치해내는 것을 확인할 수 있었다.
 3. high-layer의 attention block이 더 최근 기록에 의존한다는 사실을 확인할 수 있었다. 왜냐하면 실험 상 첫번째 block에서  멀리 떨어진 초창기 데이터를 이미 처리했기 때문에 두번째 block은 이를 고려하지 않아도 된다.
 
+
 *<center>Overall, the visualizations show that the behavior of our self-attention mechanism is adaptive, position-aware, and hierarchical</center>*
+
 
 결론을 내리자면,
 RNN 없이 전체 user sequence를 모델링해서 사용자의 다음 추천을 예측하고 제안한다.attention 매커니즘을 이용해서 adaptively considers consumed items 하고, 이 과정에서 속도와 정확성 모두 잡았다는 의의를 가진다.
