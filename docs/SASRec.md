@@ -30,7 +30,7 @@ sitemap: false
 
 Transform the Training Sequence, 
 
-$(S^{u}_1, S^{u}_2, .., S^{u}_{S^{u}-1})$
+$(S_1^{u}, S_2^{u}, .., S_{S^{u}-1}^{u})$
 
 into 
 
@@ -94,14 +94,14 @@ $LayerNorm(x) = \alpha * \frac{ \textbf{x} -\mu}{\sqrt{\sigma^2}+\epsilon}+ \bet
 ##### - Shared Item Embedding:
 b 번의 layer를 거치고 나온 output $F^{{b}}_t가 있을 때 , $F_t^{{b}}*N_i^{t}$
 
-$ r_{i,t} $ = $ F_t^{{b}}N_i^{t} $ , where $F_t^{{b}}$ is $N \times d$ and $N_i^{{t}}$ is single item embedding $ d \times |I|$
+$ r_{i,t} $ = $ F_t^{b} N_i^{t} $ , where $F_t^{b}$ is $N \times d$ and $N_i^{t}$ is single item embedding $ d \times |I|$
 
 그러므로 $ r_{i,t} $ 값이 클 수록 높은 t 시간까지 아이템 i와 해당유저가 높은 관계성을 가진다고 얘기할 수 있다.
 
 $ r_{i,t} $ 을 내림차순으로 정렬해서 높은 score를 가지는 item을 추천해줄 수 있다.
 
 ##### - Explicit User Modeling
-$r_{u,i,t} $ = $ (U_u + F_t^{{b}})M_i^{t} $ 처럼 explicit 한 정보를 담고있는  User embedding 을 생성해주어 따로 추가해줄 수 있지만 실험적으로 큰 성능향상을 찾아내진 못했다.
+$r_{u,i,t} $ = $ (U_u + F_t^{b} )M_i^{t} $ 처럼 explicit 한 정보를 담고있는  User embedding 을 생성해주어 따로 추가해줄 수 있지만 실험적으로 큰 성능향상을 찾아내진 못했다.
 
 
 ### *E. Network Training*
@@ -110,22 +110,17 @@ $r_{u,i,t} $ = $ (U_u + F_t^{{b}})M_i^{t} $ 처럼 explicit 한 정보를 담고
 그렇게 해서 만들어진 sequence $s = (s_1,s_2,...s_n)$
 를 입력하는데, 각 input이 어느것이냐에 따라 아래와 같은 output을 확인할 수 있다.
 
+<center>
+<img width="405" alt="스크린샷 2023-12-22 오후 1 59 42" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/4f05e45d-db47-47d7-84f5-88a614491505">
+</center>
 
-$ o_t = 
-\left\{\begin{matrix}   
-<pad> \\ 
-s_{t+1} \\ 
-S^u_{S_u}
-\end{matrix}\right.
-$
-
-이 때 $S^u_{S_u}$는 우리가 가장 마지막에 뽑아내는 prediction이라고 이해하면 된다.
+이 때 $S^u_{S_u}$ 는 우리가 가장 마지막에 뽑아내는 prediction이라고 이해하면 된다.
 
 그리고 loss function으로는 binary cross entropy loss 를 채택했다.
 
 ![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/aab65897-9be3-4026-9923-28455ae0e3ff)
 
-모든 모든 시간 순번 t 에 대해서 그 다음 output을 예측한다. 여기서 조금 헷갈릴 수 있는데 $S_u$는 sequence item을 의미하고 t의 경우 그 sequence item 보다 먼저 나왔던 item t들(자기 자신도 포함)을 의미한다. 
+모든 모든 시간 순번 t 에 대해서 그 다음 output을 예측한다. 여기서 조금 헷갈릴 수 있는데 $S_u$ 는 sequence item을 의미하고 t의 경우 그 sequence item 보다 먼저 나왔던 item t들(자기 자신도 포함)을 의미한다. 
 각 epoch 마다 각 순서에서 각 time step 마다 하나의 negative sample j를 만들어서 loss 계산에 포함시켰다
 ### *F. Complexity Analysis*
 - Space Complexity: 우리 모델에서 학습 가능한 parameter 수는 (1)self attention, (2) FFN, (3) layer normalization 이고 space complexity 는 $O(Id + nd + d^2)$ 따른다. 이는 기존의 연구에 비해서 적고 d의 차원이 낮을 것을 고려하면 it does not grow with the number of users 이다.
