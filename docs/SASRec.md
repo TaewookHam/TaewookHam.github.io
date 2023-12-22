@@ -36,7 +36,7 @@ into
 
 $s = (s_1,s_2,...s_n)$
 - item Embedding Matrix $M \in R^{I\times d}$
-- input Embedding Matrix $E \in R^{n\times d}$, where $E_i = M_{s_i}$
+- input Embedding Matrix $E \in R^{n\times d}$ , where $E_i = M_{s_i}$
 즉, 전체 아이템을 담고 있는 행렬 M에서 우리의 i번째 input을 가져온 형태라는 것이다.
 
 #### *Positional Encoding*
@@ -47,25 +47,25 @@ M_{s_1}+ P_1\\
 M_{s_2}+ P_2\\ 
 ...\\ 
 M_{s_n}+ P_4
-\end{bmatrix}$
+\end{bmatrix}$ 
 
 여기서 P는 learnable position embedding layer로서 원래의 transformer 논문에서 사용되었던 삼각함수를 사용한 fixed position embedding을 사용하려 했으나 자신들의 연구에서 성능을 저하시키는 것을 발견, learnable 한 방식을 채택하게 되었다.
 
 ### *B. Self Attention Block*
 Attention 과 마찬가지로 Q,K,V 값을 생성하고 Self attention layer에 통과시킨다.
 
-$\textbf{S} = SA(\hat{E}) = Attention(\hat{E}W^{Q},\hat{E}W^{K},\hat{E}W^{V})$
+$\textbf{S} = SA(\hat{E}) = Attention(\hat{E}W^{Q},\hat{E}W^{K},\hat{E}W^{V})$ 
 
 식이 가지는 의미를 간단하게 설명하자면, 
 1. Embedding layer를 각각 Key, Query, Value set으로 나눈다.
 2. i번째 item (Key)와 j번째 item (Query) 간의 관계를 inner product로 나타내고 그 관계성을 attention coefficient로 나타내어 j번째 item(Value)에 곱해준다. 당연하게 두 아이템 간의 관계가 높을 수록 inner product 값이 크게 나타날 것이고 j번째 item의 vector에 더 가중치를 준다.
-단 이때 project matrix $W$가 차원을 바꾸지는 않고 여전히 d 차원으로 차원보존한다. 논문에 따르면 projection 은 모델을 더 flexible하게 만든다고 한다. 예를 들어 $i th$ Query와 $j th$ Key간 관계와 $j th$ Query와 $i th$ Key간 관계
+단 이때 project matrix $W$ 가 차원을 바꾸지는 않고 여전히 d 차원으로 차원보존한다. 논문에 따르면 projection 은 모델을 더 flexible하게 만든다고 한다. 예를 들어 $i th$ Query와 $j th$ Key간 관계와 $j th$ Query와 $i th$ Key간 관계
 
 그렇지만 attention 에서 흔히 얘기하는 cheating 을 막아야하므로 masked self attention 과 유사하게 $i < j$ 인 경우, $i th$ Query와 $j th$ Key간 관계는 block 해야한다.
 
 또한 모델에서는 한 데이터 포인트끼리 loss를 계산하는 Point-Wise Feed-Forward Network을 사용하기로 했다.
 
-F_i = FFN(S_i) = ReLU(S_iW^{(1)} + b^{(1)}W^{(2)}) + b^{(2)}
+$F_i = FFN(S_i) = ReLU(S_iW^{(1)} + b^{(1)}W^{(2)}) + b^{(2)}$
 
 물론 논문에서는 attention layer의 i번째 row만 FNF에 통과시켰지만 사실 상 matrix calculation을 통해서 통째로 계산할 것이다.
 
@@ -92,9 +92,9 @@ $LayerNorm(x) = \alpha * \frac{ \textbf{x} -\mu}{\sqrt{\sigma^2}+\epsilon}+ \bet
 위의 과정을 하는 이유는 궁긍적으로 사용자의 최근 history를 고려해서 어떤 아이템에 가장 관심을 가질지를 예측하는 것이다. 그렇다면 예측은 어떻게 하는 것일까?
 
 ##### - Shared Item Embedding:
-b 번의 layer를 거치고 나온 output $F^{{b}}_t가 있을 때 , $F_t^{{b}}*N_i^{t}$
+b 번의 layer를 거치고 나온 output $F_t^{{b}}$ 가 있을 때 , $F_t^{b}*N_i^{t}$
 
-$ r_{i,t} $ = $ F_t^{b} N_i^{t} $ , where $F_t^{b}$ is $N \times d$ and $N_i^{t}$ is single item embedding $ d \times |I|$
+$ r_{i,t} $ = $ F_t^{b} N_i^{t} $ , where $F_t^{b}$ is $N \times d$ and $N_i^{t}$ is single item embedding $d \times |I|$
 
 그러므로 $ r_{i,t} $ 값이 클 수록 높은 t 시간까지 아이템 i와 해당유저가 높은 관계성을 가진다고 얘기할 수 있다.
 
@@ -107,8 +107,7 @@ $r_{u,i,t} $ = $ (U_u + F_t^{b} )M_i^{t} $ 처럼 explicit 한 정보를 담고�
 ### *E. Network Training*
 만약 input의 길이가 우리가 다루는 n보다 길다면 가장 최근의 n개의 데이터를 input으로 사용하고,
 반대로 n보다 짧다면 padding을 이용해서 model input을 조절할 수 있다.
-그렇게 해서 만들어진 sequence $s = (s_1,s_2,...s_n)$
-를 입력하는데, 각 input이 어느것이냐에 따라 아래와 같은 output을 확인할 수 있다.
+그렇게 해서 만들어진 sequence $s = (s_1,s_2,...s_n)$ 를 입력하는데, 각 input이 어느것이냐에 따라 아래와 같은 output을 확인할 수 있다.
 
 <center>
 <img width="405" alt="스크린샷 2023-12-22 오후 1 59 42" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/4f05e45d-db47-47d7-84f5-88a614491505">
@@ -154,10 +153,8 @@ user implicit interact로서 review 혹은 rating을 사용했다.(주로 해당
 3. 순서를 고려하는 deep learning 모델들
 
 
-
-
 Recommender Systems 에 자주 사용되는 Metric Hit@10과 NDCG@10을 짧게 설명하자면
-- Hit@10: 실제 $S_u$ 번째 item이 우리가 예측한 score $r$의 top 10안에 들어갈 확률
+- Hit@10: 실제 $S_u$ 번째 item이 우리가 예측한 score $r$ 의 top 10안에 들어갈 확률
 - NDCG@10: NDCG@K는 가장 이상적인 추천 조합 대비 현재 모델의 추천 리스트가 얼마나 좋은지를 나타내는 지표이다. 그리고 정규화를 함으로써 NDCG는 0~1사이의 값을 가지게 된다. 
 [출처: https://sungkee-book.tistory.com/11]
 
