@@ -42,12 +42,7 @@ $s = (s_1,s_2,...s_n)$
 #### *Positional Encoding*
 Transformer에서 sequential input을 순서대로 받아들이지 않고 한 번에 위치 정보를 받아들이기 위한 방식으로 postion embedding P를 처음 input embedding layer에 더해준다.
 
-$\hat{E} = \begin{bmatrix}
-M_{s_1}+ P_1\\
-M_{s_2}+ P_2\\ 
-...\\ 
-M_{s_n}+ P_4
-\end{bmatrix}$ 
+$\hat{E} = \begin{bmatrix} M_{s_1}+ P_1 \\ M_{s_2}+ P_2 \\  ... \\ M_{s_n}+ P_4 \end{bmatrix}$ 
 
 여기서 P는 learnable position embedding layer로서 원래의 transformer 논문에서 사용되었던 삼각함수를 사용한 fixed position embedding을 사용하려 했으나 자신들의 연구에서 성능을 저하시키는 것을 발견, learnable 한 방식을 채택하게 되었다.
 
@@ -92,9 +87,9 @@ $LayerNorm(x) = \alpha * \frac{ \textbf{x} -\mu}{\sqrt{\sigma^2}+\epsilon}+ \bet
 위의 과정을 하는 이유는 궁긍적으로 사용자의 최근 history를 고려해서 어떤 아이템에 가장 관심을 가질지를 예측하는 것이다. 그렇다면 예측은 어떻게 하는 것일까?
 
 ##### - Shared Item Embedding:
-b 번의 layer를 거치고 나온 output $F_t^{{b}}$ 가 있을 때 , $F_t^{b}*N_i^{t}$
+b 번의 layer를 거치고 나온 output $F_t^{b}$ 가 있을 때 , $F_t^{b}*N_i^{t}$
 
-$ r_{i,t} $ = $ F_t^{b} N_i^{t} $ , where $F_t^{b}$ is $N \times d$ and $N_i^{t}$ is single item embedding $d \times |I|$
+$ r_{i,t} = F_t^{b} N_i^{t} $ , where $F_t^{b}$ is $N \times d$ and $N_i^{t}$ is single item embedding $d \times \left\vert I \right\vert$ 
 
 그러므로 $ r_{i,t} $ 값이 클 수록 높은 t 시간까지 아이템 i와 해당유저가 높은 관계성을 가진다고 얘기할 수 있다.
 
@@ -117,7 +112,7 @@ $r_{u,i,t} $ = $ (U_u + F_t^{b} )M_i^{t} $ 처럼 explicit 한 정보를 담고�
 
 그리고 loss function으로는 binary cross entropy loss 를 채택했다.
 
-![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/aab65897-9be3-4026-9923-28455ae0e3ff)
+![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/aab65897-9be3-4026-9923-28455ae0e3ff){: width="70%" height="70%"}
 
 모든 모든 시간 순번 t 에 대해서 그 다음 output을 예측한다. 여기서 조금 헷갈릴 수 있는데 $S_u$ 는 sequence item을 의미하고 t의 경우 그 sequence item 보다 먼저 나왔던 item t들(자기 자신도 포함)을 의미한다. 
 각 epoch 마다 각 순서에서 각 time step 마다 하나의 negative sample j를 만들어서 loss 계산에 포함시켰다
@@ -174,8 +169,8 @@ a부터 e군과의 비교가 non-deep model과의 비교, f부터 b군과의 비
 - RQ2: 모델 components 들을 하나씩 제거해가는 ablation study로 성능을 비교해하면서 퍼포먼스가 어떻게 변화하는지 관찰해보자.(학교 수업 프로젝트 중 ablation study가 무엇인지 몰라 보고서에 적지 않았다가 크게 감점된 적이 있었다. 그 뒤로 절대 안 까먹지 않게 되었다.)
 <center>
 <img width="581" alt="스크린샷 2023-12-22 오전 11 56 05" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/72ea9e31-2f0f-49d1-9b10-55087be5216b">
-{: width="70%" height="70%"}
 </center>
+{: width="70%" height="70%"}
 
 
 눈에 띄눈 부분은 item embedding 을 공유하지 않을 때 오버피팅이 발생한다는 것과 attention layer를 아예 삭제했을 때 자명하게도 성능이 매우 감소한다는 사실이다.
@@ -185,16 +180,18 @@ a부터 e군과의 비교가 non-deep model과의 비교, f부터 b군과의 비
 
 <center>
 <img width="510" alt="스크린샷 2023-12-22 오후 12 02 53" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/5ef8e0ca-3d7b-414a-87a5-da137c0752d9">
-{: width="70%" height="70%"}
 </center>
+{: width="70%" height="70%"}
+
 
 그렇다면 attention weight들은 과연 모델을 학습할 때 정말로 유효한 역할을 할까?
 
 아래의 히트맵을 살펴보자.
 <center>
 <img width="1237" alt="스크린샷 2023-12-22 오후 12 05 29" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/38a3ad89-f15c-42a7-bec0-96572339de9c">
-{: width="70%" height="50%"}
 </center>
+{: width="70%" height="70%"}
+
 
 1. (a)&(c)를 비교했을 때 sparse한 아마존 beauty set을 다룰 때 더 최근 아이템에 더 focus를 두는 것을 확인할 수 있었다.
 2. (b)&(c)를 비교했을 때는 PE을 넣어주었을 때 모델이 더 집중해야할 곳을 잘 캐치해내는 것을 확인할 수 있었다.
