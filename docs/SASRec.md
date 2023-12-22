@@ -29,13 +29,13 @@ sitemap: false
 기본 세팅은 다음과 같다.
 
 Transform the Training Sequence, 
-$(S^{u}_{1},S^{u}_{2},..S^{u}_{|S^{u}|-1})$
+$(S^{u}_1, S^{u}_2, .., S^{u}_{|S^{u}|-1})$
 
 into 
 
 $s = (s_1,s_2,...s_n)$
 - item Embedding Matrix $M \in R^{I\times d}$
-- input Embedding Matrix $E \in R^{n\times d}, where E_i = M_{s_i}$
+- input Embedding Matrix $E \in R^{n\times d}$, where $E_i = M_{s_i}$
 즉, 전체 아이템을 담고 있는 행렬 M에서 우리의 i번째 input을 가져온 형태라는 것이다.
 
 #### *Positional Encoding*
