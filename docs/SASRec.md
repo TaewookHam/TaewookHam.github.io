@@ -41,9 +41,25 @@ $s = (s_1,s_2,...s_n)$
 
 #### *Positional Encoding*
 Transformer에서 sequential input을 순서대로 받아들이지 않고 한 번에 위치 정보를 받아들이기 위한 방식으로 postion embedding P를 처음 input embedding layer에 더해준다.
-\usepackage{amsmath}
-$\hat{E} = \begin{bmatrix} M_{s_1}+ P_1 \\ M_{s_2}+ P_2 \\  ... \\ M_{s_n}+ P_4 \end{bmatrix}$ 
 
+<!-- $\hat{E} = \begin{bmatrix} M_{s_1}+ P_1 \\ M_{s_2}+ P_2 \\  ... \\ M_{s_n}+ P_4 \end{bmatrix}$ 
+ -->
+
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\[
+\hat{E} = \begin{bmatrix}
+    M_{s_1} + P_1 \\
+    M_{s_2} + P_2 \\
+    \vdots \\
+    M_{s_n} + P_4
+\end{bmatrix}
+\]
+
+\end{document}
 여기서 P는 learnable position embedding layer로서 원래의 transformer 논문에서 사용되었던 삼각함수를 사용한 fixed position embedding을 사용하려 했으나 자신들의 연구에서 성능을 저하시키는 것을 발견, learnable 한 방식을 채택하게 되었다.
 
 ### *B. Self Attention Block*
