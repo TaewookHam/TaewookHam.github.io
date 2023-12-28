@@ -118,7 +118,7 @@ BPR 손실함수는 observed interaction 이 unobserved interaction보다 더 �
 
 
 
-### **4\. Experiment & Conclusion**
+## **4\. Experiment & Conclusion**
 
 &ensp; 논문에서는 아래의 세 가지 질문에 답하는 방식으로 결과를 보여주고 있다.
 - RQ1: How does NGCF perform as compared with state-of-the-art CF methods?
