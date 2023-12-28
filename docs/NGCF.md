@@ -103,6 +103,20 @@ L 번의 layer를 거친 경우, 한 사용자 u 에 대해서 l 개의 임베�
 
 $ y_{pred} = e^{*T}_{u} e^{*}_{i} $ 
 
+결과물로써 $ L \times L $ matrix가 나오고 해석하면 $l \in L$ 을 만족하는 사용자 u 의 $l$ 번째 embedding 과 $l' \in L$ 아이템 i 의 $l^{'}$ 간의 점수를 알아볼 수 있다.
+
+### *2.4. Optimization*
+Loss function으로 BPR Loss를 사용한다.
+BPR 손실함수는 observed interaction 이 unobserved interaction보다 더 큰 점수를 가져가야한다는 것을 전제로 한다.
+
+
+<img width="343" alt="스크린샷 2023-12-28 오후 7 18 55" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/b9bc0f6f-1610-49bb-9bbd-f060ba3244b0">
+
+$i$ 는 obseved interaction이 있는 item으로 부터, $j$ 는 그렇지 않은 경우를나타낸다.
+
+그리고 그 외의 parameter 인 $E$ 와  1~L번째 까지 $ W$는 $\theta$ parameterized L2 norm 으로 뭉뚱그려놓았다.
+
+
 
 ### **4\. Experiment & Conclusion**
 논문에서는 아래의 네 가지 질문에 답하는 방식으로 결과를 보여주고 있다.(유독 중국인들이 사용한 논문에서 이런 방식으로 Experiment 를 전개하는 방식을 즐겨 사용하는 듯하다. 어느 포인트에 초점을 맞출지 알려주는 것 같아서 좋은 것 같다.)
