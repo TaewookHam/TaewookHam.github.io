@@ -25,7 +25,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 ## Recommender Systems
 * [NeuMF]{:.heading.flip-title} --- Neural Collaborative Filtering
 * [SASRec]{:.heading.flip-title} --- Self-Attentive Sequential Recommendation
-* [NGCF]{:.heading.flip-title} --- 
+* [NGCF]{:.heading.flip-title} --- Neural Graph Collaborative Filtering
 
 {:.related-posts.faded}
 
