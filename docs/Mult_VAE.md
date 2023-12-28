@@ -1,43 +1,68 @@
 ---
 layout: page
-title: Self-Attentive Sequential Recommendation
+title: Variational Autoencoders for Collaborative Filtering
 description: >
-   At each time step, SASRec seeks to identify which items are ‘relevant’ from a user’s action history, and use them to predict the next item.
+   
 use_math: true
 sitemap: false
 ---
 ## **0&1 Abstract & Introduction**
-일상 속에서, 혹은 자연어 처리 분야에서 문맥상의 흐름, 즉 context를 고려해서 그 다음에 올 content를 예측하는 것은 중요하다. 이는 추천시스템에서도 마찬가지로 사용자의 최근 기록을 토대로 다음에 어떤 item을 추천할지 결정하기도 한다. 이에 사용되는 방식은 크게 두가지가 있다.
-- Markov Chains(MCs): by making strong simplifying assumptions, perform well in high- sparsity settings, but may fail to capture the intricate dynamics of more complex scenarios.
 
-- Recurrent Neural Networks(RNNs): while expressive, require large amounts of data
+#### - collaborative signal 이란?
 
-이 두가지 방식의 장점을 취합하고 단점을 보완한 방식이 이번 논문에서 소개할 SASRec 이다.
-먼저 소개하자면, RNN처럼 long-term 메모리에 기반하고, MC처럼 short-term에 기반한 decision을 내린다. 이 과정에서 self-attention을 사용해 사용자의 history 중 어떤 item이 사용자와 관련성이 높은지 파악하고 그 아이템을 추천 item을 예측하는 데에 사용한다.
-결과적으로 sparse dataset과 dense dataset에서 모두 좋은 성능을 보여주었다고 한다.
+&ensp; 예를 들어 쿠팡에서 사용자나 아이템에 대한 embedding feature vector 혹은 matrix를 생성한다고 하자. 이때 기존의 전형적인 MF나 deep-learning MF을 활용한 방식은 '사용자가 어떤 아이템에 관심을 가지고, 그것을 소비했냐?' 라는 정보를 담지 못한다는 단점이 있다. 논문에서는 그 정보를 collaborative signal, latent in user-item interactions라고 표현하고 있다.
 
+#### - high-order connectivities란?
 
-![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/17468523-030d-4e04-802f-f2fa8cec3a40)
-{: width="70%" height="50%"}
+&ensp; 기존 MF 방식에서 사용했던 단순히 누구누구가 무슨 영화를 봤다를 표현하는 것을 넘어서 user-item bipartite 그래프 상에서 다단계의 복잡한 연결관계를 표현한 것. 
 
-## **3. Methodology**
+#### - 기존 방식의 한계점
+
+&ensp; 기존의  비슷한 특징을 가진 사용자는 비슷한 취향을 가지고 있을 것이다라는 가정을 기반으로 아이템을 추천해주었다. 여기서 embedding + interation modeling 이 필수다. 그러나 기존의 다양한 접근의 연구방식들은 사용자 간, 혹은 아이템 간의 유사성을 완벽하게 캐치해내기에는 collaborative signal을 잘 담아내지 못했다.  사실 기존 연구는 유저 임베딩을 할 때 어떤 서술적인 정보만 참고할 뿐이지, (예를 들면, 쿠팡 회원가입시 기재하는 개인정보들이라 생각하자), 내가 야구와 테니스를 좋아하는지는 전혀 고려하지 않는다는 것이다.
+그래서 임베딩에 정보가 부족하니까 이 interaction을 알아내기 위한 함수를 따로 만들어야 하는 불편함이 있었다.
 
 ---
 
-### *A. Embedding Layer*
+&ensp; 논문의 궁극적인 목적은 collaborative signal을 embedding 과정에 포함시키는 것이다. 그렇게 함으로써 high-order connectivity를 효과적으로 표현해낼 수 있다.
 
-기본 세팅은 다음과 같다.
+<img width="602" alt="스크린샷 2023-12-26 오후 11 18 45" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ced67827-c8ee-4c72-bba6-43096fc00099">
+{: width="70%" height="70%"}
 
-Transform the Training Sequence, 
 
-$(S_1^{u}, S_2^{u}, .., S_{S^{u}-1}^{u})$
 
-into 
+&ensp; toy exmaple은 어렵지 않으므로 자세하게 설명하지는 않겠다. 간단히 말해, $ i_4 \rightarrow u_2 \rightarrow i_2 \rightarrow u_1 $ 처럼 나타낼 수 있는 high-order connectivity 를 추천시스템에 담아낼 수 있는 모델을 만드는 것이 해당 논문의 방향성이라고 이해할 수 있다. 
 
-$s = (s_1,s_2,...s_n)$
-- item Embedding Matrix $M \in R^{I\times d}$
-- input Embedding Matrix $E \in R^{n\times d}$ , where $E_i = M_{s_i}$
-즉, 전체 아이템을 담고 있는 행렬 M에서 우리의 i번째 input을 가져온 형태라는 것이다.
+&ensp; 그렇다면 어떻게 목적을 달성할거냐? 바로 Embedding propagation을 사용하는 방식을 사용할 것이다.
+
+#### - embedding propagation 이란?
+
+&ensp; we devise an embedding propagation layer, which refines a user’s (or an item’s) embedding by aggregating the embeddings of the interacted items (or users). 
+
+&ensp; 사용자가 상호작용한 item의 정보를 취합하여 그 사용자의 embedding을 생성한다. 그리고 이 작업을 여러번 반복(propagation layer를 거친다)한다. 
+Figure 1; 에서 layer를 몇 번 쌓았냐에 따라 $ l $ 로 표기해두었다. 실험 결과에도 나오지만 layer가 어느 정도까지는 늘어날 수록 좋은 성능을 보인다고 한다.
+
+
+## **2. Methodology**
+---
+기본적으로 3 개의 framework로 구성,
+-
+-
+-
+
+### *2.2. Embedding Propagation Layers*
+
+Intuitively, the interacted items provide direct evidence on a user’s preference(한국어로 어떻게 표현할지 몰라서 그대로 사용),
+이와 비슷하게 아이템을 소비하는 사용자는 아이템의 특징으로 간주되어 두 아이템의 협업 유사성을 측정하는 데 사용될 수 있습니다.
+message construction and message aggregation 을 사용해 propagtion을 구성한다. 
+
+Message Construction
+---
+
+
+Message Aggregation:
+---
+
+
 
 #### *Positional Encoding*
 Transformer에서 sequential input을 순서대로 받아들이지 않고 한 번에 위치 정보를 받아들이기 위한 방식으로 postion embedding P를 처음 input embedding layer에 더해준다.
