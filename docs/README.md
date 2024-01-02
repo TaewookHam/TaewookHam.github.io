@@ -23,13 +23,18 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 {:.related-posts.faded}
 
 ## Recommender Systems
+
+* [A Survey on the Fairness of Recommender Systems]{:.heading.flip-title} --- A Survey on the Fairness of Recommender Systems
+
 * [NeuMF]{:.heading.flip-title} --- Neural Collaborative Filtering
 * [SASRec]{:.heading.flip-title} --- Self-Attentive Sequential Recommendation
 * [NGCF]{:.heading.flip-title} --- Neural Graph Collaborative Filtering
+* [Mult-VAE]{:.heading.flip-title} --- Variational Autoencoders for Collaborative Filtering
 
 {:.related-posts.faded}
 
 ## VAEs
+* [VAE]{:.heading.flip-title} --- Auto-Encoding Variational Bayes
 
 {:.related-posts.faded}
 
@@ -39,10 +44,15 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 * [CHANGELOG]{:.heading.flip-title} --- Version history of Hydejack.
 {:.related-posts.faded}
 
+
 [NeuMF]: NeuMF.md
 [GAT]: GAT.md
 [SASRec]: SASRec.md
 [NGCF]: NGCF.md
+[Mult-VAE]: Mult_VAE.md
+[A Survey on the Fairness of Recommender Systems]: Survey.md
+
+<!-- [VAE]: VAE.md -->
 
 
 [install]: install.md

@@ -2,87 +2,97 @@
 layout: page
 title: Variational Autoencoders for Collaborative Filtering
 description: >
-   
+   We extend variational autoencoders (vaes) to collaborative filtering for implicit feedback.
 use_math: true
 sitemap: false
 ---
-## **0&1 Abstract & Introduction**
+
+## **들어가기전**
+
+1\. multinomial distribution이란?
+
+-   다항분포 : 실험결과가 k개인 확률 실험을 n번 반복하였을 때, 각 범주에 속하는 횟수를 확률변수로 하는 분포
+
+2\. Paper의 목적
+
+-   VAE를 사용해서 기존의 linear 한 collaborative filtering 을 non-linear하게 표현함으로써  확률분포를 이용해 사용자 취향을 예측할 수 있다.
+-   기존 top-N ranking loss를 multinomial likelihoods를 이용함으로써 더 정확하게 근사할 수 있다.
+
+## **2\. Method**
+
+### **2.1 Model**
+
+![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/3b2eedba-7c8c-4989-b23b-000ec7c7aac6)
+
+paper 에서 encoder 와 decoder 의 framework를 간략하게 위와 같은 식으로 표현하였다. 이를 이미지로 표현하면 아래와 같다.
+[출처: https://huidea.tistory.com/297]
+
+![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/1c92ebd8-8fb0-45aa-a243-989d033a9814) 
+
+어떤 한 user의 latent vector $z_{u}$ 가 가우시안 분포를 따른다고 가정한다. 이는 뒷 부분에서 VAE의 가정으로 설명할 것이다. 이 때 함수 $f_{\theta}(z_{u})$ 는 latent vector 를 I 차원으로 맵핑하는데 $(f_{\theta}(z_{u}) \in R^{K \times I})$ , 총 $I$ 개의 각 아이템과 유저 u가 관련있을 확률로 맵핑시킨다고 이해하면 된다.  그리고 이 확률분포를 따르는 다항분포를 $x_{u} \leftarrow  Mult(N_u,\pi(z_{u}) )$ 라고 정의했다.
+
+VAE와 마찬가지로 latent space를 생성하기 위해 sampling 하는 부분을 encoding part, 함수 $f_{\theta}()$ 가 적용되어 x로 되돌리는 부분을 decoding part라 이해할 수 있다.
 
 
-## **2. Methodology**
----
+원래의 VAE에서는 디코더 분포 p 를 베르누이 분포 혹은 가우시안 분포로서 가정했지만 해당 paper에서는 세가지를 제시한다. 그리고 핵심 아이디어는 당연히 multinomial distribution이다. 그리고 logistic log-likelihood는 사실 multinomial log-likelihood의 특별케이스이다.
+
+- Multinomial log-distribution(cross-entropy loss for multi-class classification)
+- Gaussian log-likelihood
+- logistic log-likelihood(cross-entropy loss for binary classification)
 
 
-## **4\. Experiment & Conclusion**
-논문에서는 아래의 네 가지 질문에 답하는 방식으로 결과를 보여주고 있다.(유독 중국인들이 사용한 논문에서 이런 방식으로 Experiment 를 전개하는 방식을 즐겨 사용하는 듯하다. 어느 포인트에 초점을 맞출지 알려주는 것 같아서 좋은 것 같다.)
-- RQ1: Does SASRec outperform state-of-the-art models including CNN/RNN based methods?
-- RQ2: What is the influence of various components in the SASRec architecture?
-- RQ3: What is the training efficiency and scalability (regard- ing n) of SASRec?
-- RQ4: Are the attention weights able to learn meaningful patterns related to positions or items’ attributes?
-
-Amazon, Steam, MovieLens 의 데이터 셋을 사용. 이때 Amazon은 sparse 하고, Steam과 MovieLens는 dense dataset에 해당된다.
-user implicit interact로서 review 혹은 rating을 사용했다.(주로 해당 interact는 주로 explicit으로 사용하는 데 특이하다.)
-우리 모델은 sequence를 중시하므로 action history의 timestamp도 훈련에 사용하였다.
-
-비교군은
-1. 순서 관계없이 feedback 만 고려하는 모델들
-2. 순서를 고려하는 모델들
-3. 순서를 고려하는 deep learning 모델들
+![image](https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/88aaa347-4890-4a14-96b0-9b6b17e08cbd)
 
 
-Recommender Systems 에 자주 사용되는 Metric Hit@10과 NDCG@10을 짧게 설명하자면
-- Hit@10: 실제 $S_u$ 번째 item이 우리가 예측한 score $r$ 의 top 10안에 들어갈 확률
-- NDCG@10: NDCG@K는 가장 이상적인 추천 조합 대비 현재 모델의 추천 리스트가 얼마나 좋은지를 나타내는 지표이다. 그리고 정규화를 함으로써 NDCG는 0~1사이의 값을 가지게 된다. 
-[출처: https://sungkee-book.tistory.com/11]
+Multinomial distribution은 $x_u$ 가 0이 아닌 항에 대해서 더 보상을 주는 방식이다. 위의 framewrok 그림을 보면 input x에서 원래 까만 부분은 output $\pi(x)$ 에서 'mass'를 더 많이 할당 받았다. 그러나 이 mass라는 것은 결국 normalize된 확률이고, 모든 아이템 I 가 전체 확률 1을 나누어 먹어야 한다. 그렇기 때문에 모델은 더 많이 클릭할 것만 같은 item에 더 큰 확률을 부여하게 된다. 아이템은 한 사용자에 대해 상대적인 확률을 각각 가지고 있기 때문에 줄 세우기 가능, top N 개를 사용자에게 추천해주면 끝. -> 이러한 이유로 저자는 multinomial distribution이 추천 시스템에 사용되기에 알맞다고 판단.
 
-Evaluation에서 각 user 당 100가지의 negative items를 샘플링하고 ground truth 1개 를 결합한 총 101개의 item을 ranking하는 방식을 사용해 Hit@10과 NDCG@10을 평가하기로 한다.
+### **2.2 Variational Inference**
 
-비교 결과는 다음과 같다.
+VAE를 알고 있다는 가정하에 논문을 읽으며 내가 헷갈렸던 부분 위주로 설명하겠다.
+([https://arxiv.org/abs/1312.6114](https://arxiv.org/abs/1312.6114))
 
-<img width="1190" alt="스크린샷 2023-12-22 오전 10 51 58" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/c53b19ec-75de-4c84-b252-d2b362a6211d">
+### *Encoder*
+z를 샘플링할 때,
+각 사용자마다 latent dim K 개 만큼의  $\mu_{u}$와 $\sigma_{u}$ 를 만들어주는 것은 매우 번거로운 일이다. 이에 대한 해결책으로 우리는 function $g_{\phi}()$ 를 만들고 이것을 inference model(data-dependent function)이라고 부른다. 이렇게 하면 그냥 함수(사실을 뉴럴넷이지만)에 어떤 input $x_u$ 를 넣으면 알아서 $\mu_{u}$와 $\sigma_{u}$ 를 K개 뽑아줄 수 있다!
 
-a부터 e군과의 비교가 non-deep model과의 비교, f부터 b군과의 비교가 deep model과의 비교이다.
+User $x_u$가 주어졌을 때, latent vector $z_u$를 샘플링할 분포 $q_{\phi}(z_u|x_u)$를 다음과 같이 표현할 수 있다.
 
+<img width="419" alt="스크린샷 2024-01-02 오전 12 21 23" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/cb138790-d5b5-442a-92fe-3eea22f8f27c">
+{:width: "50%", height: "50%"}
 
-- RQ1: SASRec는 어떤 형태의 데이터셋에서든 다른 모델들을 뛰어넘었다.
-이에 대해 저자는 SASRec가 different dataset에 따라 different range를 참고하여 추천을 해주기 때문에 모델이 좋은 성능을 보이다고 한다.
+VAE를 읽어보며 정말 헷갈렸던 부분은 z를 어떤 차원으로 몇개 샘플링하느냐에 관련된 부분이었다.
 
+정확히 말하자면,
 
-- RQ2: 모델 components 들을 하나씩 제거해가는 ablation study로 성능을 비교해하면서 퍼포먼스가 어떻게 변화하는지 관찰해보자.(학교 수업 프로젝트 중 ablation study가 무엇인지 몰라 보고서에 적지 않았다가 크게 감점된 적이 있었다. 그 뒤로 절대 안 까먹지 않게 되었다.)
-<center>
-<img width="581" alt="스크린샷 2023-12-22 오전 11 56 05" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/72ea9e31-2f0f-49d1-9b10-55087be5216b">
-</center>
-{: width="70%" height="70%"}
+"Neural net $q$ 를 이용해  한 user 당 latent dimesion K개 만큼 mean 과 var를 만든다. 그리고 그 개수에 맞춰서 $\epsilon$ 을 생성해 곱해준다."
 
+그래서 만약 batch size가 100이라고 한다면, mean.size() 는 [100,50], var.size() 도 [100,50]이 되는 것이다.
 
-눈에 띄눈 부분은 item embedding 을 공유하지 않을 때 오버피팅이 발생한다는 것과 attention layer를 아예 삭제했을 때 자명하게도 성능이 매우 감소한다는 사실이다.
+### *Decoder*
 
-성능은 검증했으니 학습속도와 수렴속도는 어떨지 측정해보자.
-- RQ3: 학습속도는 앞서 언급했듯 병렬로 처리되는 $O(n^2d)$ 기 때문에 빠르다는 것을 입증했다. 또한 결과에서 확인 할 수 있듯 다른 비교군에 비해 압도적으로 빠르게 목표치로 수렴하는 것을 볼 수 있다.
+디코더 부분은 별거 없음.
 
-<center>
-<img width="510" alt="스크린샷 2023-12-22 오후 12 02 53" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/5ef8e0ca-3d7b-414a-87a5-da137c0752d9">
-</center>
-{: width="70%" height="70%"}
+기본적인 ELBO form을 살짝 변형한 방식을 사용했다. KL-divergence 부분에 parameter $\beta$를 붙어주었는데, regularization을 줄이는 방향으로 조절했다.
 
+논문처럼 $\beta < 1$ 로 바꿔준 경우,
 
-그렇다면 attention weight들은 과연 모델을 학습할 때 정말로 유효한 역할을 할까?
+AE가 가진 단점처럼, 기존과 다른 새로운 사용자를 manifold 상에서 mapping 하고 generate 를 잘하지 못할 수도 있다. 그러나, 
 
-아래의 히트맵을 살펴보자.
-<center>
-<img width="1237" alt="스크린샷 2023-12-22 오후 12 05 29" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/38a3ad89-f15c-42a7-bec0-96572339de9c">
-</center>
-{: width="70%" height="70%"}
+어차피 최종목표는 Lowe bound의 최대화해서 훌륭한 생성모델을 만드는 것이 아니라 latent space를 잘 구축하여 좋은 추천시스템을 만드는 것이기 때문에 괜찮다. annealing 방식으로 최적의 $\beta$ 값을 찾았을 때의 결과는 다음과 같았다. 
+
+<img width="669" alt="스크린샷 2024-01-02 오전 12 42 16" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/f8ca1a61-523b-433c-96b0-ca97469d1db8">
 
 
-1. (a)&(c)를 비교했을 때 sparse한 아마존 beauty set을 다룰 때 더 최근 아이템에 더 focus를 두는 것을 확인할 수 있었다.
-2. (b)&(c)를 비교했을 때는 PE을 넣어주었을 때 모델이 더 집중해야할 곳을 잘 캐치해내는 것을 확인할 수 있었다.
-3. high-layer의 attention block이 더 최근 기록에 의존한다는 사실을 확인할 수 있었다. 왜냐하면 실험 상 첫번째 block에서  멀리 떨어진 초창기 데이터를 이미 처리했기 때문에 두번째 block은 이를 고려하지 않아도 된다.
+## **2.3 A taxonomy of autoencoders**
+
+실험에서 사용할 모델은 Mult-DAE와 Mul-VAE 두가지이고, 이 두모델이 기존의 SOTA들보다 우수한 성능을 보였다.
+
+-   Mult-VAE : $ \textbf{z} = \mu_{\phi}(\textbf{x})  $
+-   Mult-DAE : $ \textbf{z} = g_{\phi}(x) $
 
 
-*<center>Overall, the visualizations show that the behavior of our self-attention mechanism is adaptive, position-aware, and hierarchical</center>*
+VAE는 input을 벡터로 인식해서 NN에 집어 넣고 결과물로 벡터를 얻는다고 한다면, DAE는 사용자 input을 하나의 포인트 그 자체로 생각하고 그에 알맞는 latent space를 뱉어낸다고 볼 수 있다.
 
+## **2.4 Prediction**
 
-결론을 내리자면,
-RNN 없이 전체 user sequence를 모델링해서 사용자의 다음 추천을 예측하고 제안한다.attention 매커니즘을 이용해서 adaptively considers consumed items 하고, 이 과정에서 속도와 정확성 모두 잡았다는 의의를 가진다.
-
+일반적으로 Matrix Factorization과 같은 CF model은 latent factor를 알아내기 위해서 일련의 최적화 과정을 거쳐야 한다. 오토인코더를 사용하면, 자연스럽게 latent space를 최적화하는 과정에서 사용자에게 알맞는 예측을 제시할 수 있다는 장점이 있다.
