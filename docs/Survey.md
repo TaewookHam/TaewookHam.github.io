@@ -175,9 +175,6 @@ point-wise
 
 pair-wise
 
-
-
-
 #### adversarial learning-based methods
 
 adverserial learning 이란? 
@@ -211,60 +208,75 @@ use transfer learning, use contextual framework, add high var noise to VAE 등�
 
 ### Slot-wise
 
-- Group recommendations
+#### - Group recommendations
 
-Serbos: greed-based approach를 사용. 매 순간, 함수 $f_G(P,i)$ 를 최대화하는 item을 list에 추가하는 방식
+- Serbos 
+   - greed-based approach를 사용. 매 순간, 함수 $f_G(P,i)$ 를 최대화하는 item을 list에 추가하는 방식
 
-Lin: gredd-based approach는 동일하지만 Pareto efficiency 에 기반한 fairness-recommendation performance 둘 다 동시에 증가시킬 수 있는 
+- Lin
+   - gredd-based approach는 동일하지만 Pareto efficiency 에 기반한 fairness-recommendation performance 둘 다 동시에 증가시킬 수 있는 
 
-$ \lambda SW(g,I) + (1-\lambda) F(g,I)$ 
+      $ \lambda SW(g,I) + (1-\lambda) F(g,I)$ 
 
-를 증가시키는 방식을 사용
+      를 증가시키는 방식을 사용
 
-Sacharidis: 더 나아가 Pareto-optimal items candidate 를 찾은 뒤, linear aggregation 을 통해 순위 점수를 생성해 항목이 Top-K에 랭크될 확률을 추정한다.
+- Sacharidis
+   - Lin보다 더 나아가 Pareto-optimal items candidate 를 찾은 뒤, linear aggregation 을 통해 순위 점수를 생성해 항목이 Top-K에 랭크될 확률을 추정한다.
 
-Kaya: 간단히 말해 fairness-recommendation performance 둘 중 어느것도 희생하지 않는 선에서 fixed-length recommendation lists 를 벗어나 fairness of different positions simultaneously를 고려한다.
--> 그대로 옮겨 적긴 했는데 무슨 소린지 잘 이해가 안 됨.
+- Kaya
+   - fairness-recommendation performance 둘 중 어느것도 희생하지 않는 선에서 fixed-length recommendation lists 를 벗어나 fairness of different positions simultaneously를 고려. -> 그대로 옮겨 적긴 했는데 무슨 소린지 잘 이해가 안 됨...
 
-- general recommendation scenario
+#### - general recommendation scenario
 
-기존 방법은 두 가지 주요 관점에서 공정성을 도입하는데, 하나는 공정성 constrint를 만족시키면서 utility 을 극대화하는 것이고, 다른 하나는 공정성과 utility(효용)을 함께 최적화하는 것입니다.
--> ??? 무슨 말장난 하는 것도 아니고...
+두가지 관점이 존재.
 
-전자: 최대한의 fairness constraint를 만족시켜야한다는 관점
+첫번째는, 
 
-후자: 공정성과 utility 간의 trade-off 가 존재
+How to maximize utility satisfying fairness constraints??
 
-Zehlike: FA*IR 를 제시.
+즉, performance 적인 부분은 어느정도 희생하되, 최대한의 fairness constraint를 만족시켜야한다는 관점이다.
 
-FA*IR는 무엇이냐?: 두 그룹에 할당된 item queue가 2개 있다고 하자. 하나는 protect 큐이고 다른 하나는 unprotected 버전이다. 이때 각 queue는 relevance 순으로 나열되어 있다. 만약 두 그룹간의 공정성이 충족되지 못한다면 protected queue에서 가장 상관성이 높은 아이템을 뽑아서 리스트에 추가한다. 공정성을 만족한다면 그냥 전체에서 상관성이 높은 아이템을 뽑아서 리스트에 추가한다.
+- Zehlike: 
+   - FA*IR 를 제시.
 
-Geyik: FA*IR을 3개 이상의 그룹에 사용가능하도록 만듦.
+   >FA*IR 이란? 
+   두 그룹에 할당된 item queue가 2개 있다고 하자. 하나는 protect 큐이고 다른 하나는 unprotected 버전이다. 이때 각 queue는 relevance 순으로 나열되어 있다. 만약 두 그룹간의 공정성이 충족되지 못한다면 protected queue에서 가장 상관성이 높은 아이템을 뽑아서 리스트에 추가한다. 공정성을 만족한다면 그냥 전체에서 상관성이 높은 아이템을 뽑아서 리스트에 추가한다.
+
+- Geyik: FA*IR을 3개 이상의 그룹에 사용가능하도록 만듦.
 
 
-tradeoff between fairness and recommendation performance(=utility)를 연구한 논문은 무엇이 있을까? 일단 기본 form은 아래와 같다.
+두번째는 how to optimize the tradeoff between fairness and recommendation performance(=utility)?
+
+즉,공정성과 utility 간의 trade-off 를 최적화하는 관점이다.
+
+P는 performance, F는 fairness 관련 점수이다. 참고로 F는 논문마다 다르다.
+일단 기본 form은 아래와 같다.
 
 $ i^{*} = argmax_{i \in (R-C)} \space \lambda P(u,i) + (1-\lambda) F(u,i,C) $ 
 
-P는 performance, F는 fairness 관련 점수이다. 참고로 F는 논문마다 다르다.
-
 매번 리스트에 어떤 item을 추가할지 선택할 때(slot-wise) 위의 function을 최대화하는 $i^{*}$ 를 선택한다.
 
-Steck: 공정성 점수는 사용자 u의 이력 내 다양한 항목 그룹에 대한 분포와 추천 목록의 항목 그룹에 대한 분포 간의 KL-divergence로 정의된다.
+- Steck
+   - 공정성 점수는 사용자 u의 이력 내 다양한 항목 그룹에 대한 분포와 추천 목록의 항목 그룹에 대한 분포 간의 KL-divergence로 정의된다.
 
-Karako and Manggala: Maximal Marginal Relevance 라는 것을 도입해, 새 아이템 i가 두 그룹 간의 임베딩 차이에 어떻게 기여하는지를 item fairness score의 기준으로 삼았다.
+- Karako and Manggala 
+   - Maximal Marginal Relevance 라는 것을 도입해, 새 아이템 i가 두 그룹 간의 임베딩 차이에 어떻게 기여하는지를 item fairness score의 기준으로 삼았다.
 
-Liu: 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것을 이해.
+- Liu 
+   - 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것을 이해.
 
-Sonboli: Liu의 아이디어에 기반해 item attribute에 따라 또 취향은 천차만별이 된다. 따라서 personalized fairness score 를 고려할 때 multiple item attributes을 고려해 주었고, better trade-off 를 보였다고 한다.
+- Sonboli
+   - Liu의 아이디어에 기반해 item attribute에 따라 또 취향은 천차만별이 된다. 따라서 personalized fairness score 를 고려할 때 multiple item attributes을 고려해 주었고, better trade-off 를 보였다고 한다.
 
-- dynamic ranking scenario
+#### - dynamic ranking scenario
 
-Morik: proportional controller에 기반한 방식을 제안했다. recommendation per- formance and fairness를 결합하면 linear startegy를 사용햇고 ranking 의 수가 충분히 크다면 fairness를 보장할 수 있다는 것을 증명했다.
+- Morik 
+   - proportional controller에 기반한 방식을 제안했다. recommendation per- formance and fairness를 결합하면 linear startegy를 사용햇고 ranking 의 수가 충분히 크다면 fairness를 보장할 수 있다는 것을 증명했다.
 
-$\sigma_{\tau} = argmax_{d \in D} \space (\hat{R}(d \mid x) + \lambda err_{tau}(d)) $
+      $\sigma_{\tau} = argmax_{d \in D} \space (\hat{R}(d \mid x) + \lambda err_{tau}(d)) $
 
-Yang and Ai: marginal fairness를 고려한다. 한 item을 리스트에 추가할 때 마다 공정성이 얼마나 커지느냐를 고려. marginal fairness를 최대화하는 그룹은 가장 낮은 utility/merit ratio을 가지고 있다. -> 그만큼 공정하시다는 것.
+- Yang and Ai 
+   - marginal fairness를 고려한다. 한 item을 리스트에 추가할 때 마다 공정성이 얼마나 커지느냐를 고려. marginal fairness를 최대화하는 그룹은 가장 낮은 utility/merit ratio을 가지고 있다. -> 그만큼 공정하시다는 것.
 
 요약하면, Slot-wise 방식은 한 사용자에게 제시할 list의 공정성을 최대화하는 방향으로 item by item으로 선택해 리스트를 채워나간다. 
 굉장히 직관적이고, 다루기 쉽지만 local optimum에 갇힐 수 있다는 점도 고려해야 되겠다.
@@ -275,22 +287,23 @@ Yang and Ai: marginal fairness를 고려한다. 한 item을 리스트에 추가�
 
 그렇다면 integer programming 은 무엇이냐?: GPT에 따르면,
 
- "정수계획법"은 계획을 세울 때 어떤 자원을 어떻게 할당할지를 결정하는 수학적인 방법 중 하나입니다. 주로 선형 프로그래밍이나 최적화 문제를 해결하는 데 사용됩니다. 정수계획법은 이런 문제를 해결할 때 변수들이 정수값만을 가질 수 있도록 제약을 두는 방법입니다.
+> "정수계획법"은 계획을 세울 때 어떤 자원을 어떻게 할당할지를 결정하는 수학적인 방법 중 하나입니다. 주로 선형 프로그래밍이나 최적화 문제를 해결하는 데 사용됩니다. 정수계획법은 이런 문제를 해결할 때 변수들이 정수값만을 가질 수 있도록 제약을 두는 방법입니다.
 
-라고한다. 자세한 건 더 알아봐야겠지만 변수를 정수로 제한한 상태로 최적화를 구상한다는 의미로 이해했다.
+라고한다. <br/> 
+자세한 건 더 알아봐야겠지만 변수를 정수로 제한한 상태로 최적화를 구상한다는 의미로 이해했다.
 
 #### - group recommendation scenario
 
-- Lin: slot-wise 에서 사용했던 objective function은 그대로 사용하되, 
-'''
-$ \lambda SW(g,I) + (1-\lambda) F(g,I) \space s.t \space \sum_{i}X_{i} = K, X_{i} \in 0,1 $ 
-'''
+- Lin
+   - slot-wise 에서 사용했던 objective function은 그대로 사용하되,
+   
+      $ \lambda SW(g,I) + (1-\lambda) F(g,I) \\ s.t \space \sum_{i}X_{i} = K, X_{i} \in 0,1 $ 
+   
+      라는 정수 제약조건을 걸었다. 
 
-라는 정수 제약조건을 걸었다. 
+      사실 조건을 만족하면서 식을 최대화하는 것은 Np-hard에 속하는 문제라고 하며, X를 0부터 1사이의 확률로 바꾸어서 푼다고 한단다.
 
-사실 Np-hard에 속하는 문제라고, X를 0부터 1사이의 확률로 바꾸어서 푼다고 한단다.
-
-#### general recommendation scenario
+#### - general recommendation scenario
 
 - Biega
    - ILP를 사용해 어느정도 constraint를 걸어둠으로써 추천시스템의 성능저하를 막는다.
@@ -304,36 +317,95 @@ User-wise re-rank 방식은 사용자에게 개별적으로 최적화가 진행�
 
 ### Global-wise methods
 
-앞의 두 방식은 매번 각 user마다 할당되는 single 리스트를 생성하지만 global-wise는 multiple lists 를 만든다는 차이점이 있다.
+앞의 두 방식은 매번 각 user마다 할당되는 single 리스트를 생성하지만 global-wise는 multiple lists 를 만든다는 차이점이 있다. 이렇게 하면 global-optimum 에 더 다가갈 수 있겠지?? 라는 생각으로 접근한다.
 
-핵심 아이디어: global-optimum 에 더 다가갈 수 있겠지?? 여기서는 Mathematical programming 을 주 framework로 사용한다. variable을 0,1 로 제한해 사용자에게 추천하냐 마냐로 결정한다.
-
-
-Li: integer programming에 기반한 solving 방식을 제안.
-
-Fu: Li의 방식 +  knowledge graphs 이용
-
-Mansoury:  
-
-Sürer: 
+핵심 아이디어:  여기서는 Mathematical programming 을 주 framework로 사용한다. variable을 0,1 로 제한해 사용자에게 추천하냐 마냐로 결정한다.
 
 
+One side fairness
+----
+*Mathmatical Programming based*
+
+- User fairness
+   - Li
+      - integer programming에 기반한 solving 방식을 제안.
+
+   - Fu
+      - Li의 방식 +  knowledge graphs 이용
 
 
-joint fairness 방식 
 
+- for item fairness
+   - Sürer 
 
-Patro: phase 1 에서는 노출 제약을 두고 사용자에게 greedy-recommend, phase 2에서는 제약을 없애고 추천이 빈약한 아이들에게 관련성 높은 물건들을 추천해준다.
-->  envy-free fairness for users and maximin-shared fairness for items. 을 동시에 달성
+*Other than programming-based*
 
-Wu:  improve item fairness at the group level and user fairness at the individual level 에서 Pareto와의 차이점.
-뭔소리야??
+   - Mansoury
+      - !!
 
-요약하면, 전역적 영향을 고려하고 매번 여러 목록의 순위를 다시 매깁니다.
+   - Zhu
+      - !!
 
+Joint fairness
+----
+   - Patro
+      - phase 1 에서는 노출 제약을 두고 사용자에게 greedy-recommend, phase 2에서는 제약을 없애고 추천이 빈약한 아이들에게 관련성 높은 물건들을 추천해준다. ->  envy-free fairness for users and maximin-shared fairness for items. 을 동시에 달성
+   
+   - Wu
+     - Wu:  improve item fairness at the group level and user fairness at the individual level 에서 Pareto와의 차이점. -> 뭔소리야??
 
+요약하면, 전역적 영향을 고려하고 매번 여러 목록의 순위를 다시 매긴다.
 
 # **6. DATASETS FOR FAIRNESS RECOMMENDATION STUDY**
 
-### <span style="color:red"> 정말 친절하게도 어떤 데이터셋이 어떤 attribute을 포함하고 있는지 정리 해놓으셨단다!! </span>
+#### <span style="color:red"> 정말 친절하게도 어떤 데이터셋이 어떤 attribute을 포함하고 있는지 표로 정리 해놓으셨단다!! </span>
+
+<img width="681" alt="스크린샷 2024-01-04 오후 2 26 47" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/f1c8721c-97bc-4e31-b459-64ec5bb19571">{:width= "90%", :height= "85%"}<br/>
+각 데이터셋의 자세한 설명은 생략.
+
+일반적으로 그룹을 나눌 때, 데이터셋의 사용자 성별 혹은 물건 인기도같은 specific 한 특성으로 그룹을 나눈다. 그렇지만 기준이 될만한 뚜렷한 특성이 없을 경우 <br/>첫번째, Rawlsian maximin fairness처럼 아예 그룹보다 개인레벨에서 공정성을 따지는 연구를 하거나, <br/>두번째, 사용자 history나 item 인기도 등을 고려해 따로 그룹을 분할하는 방식을 선택한다.
+
+# **7. FUTURE DIRECTIONS**
+
+사실 '공평'의 정확한 정의도 아직 잡혀있지 않으며 그 많은 정의들끼리 우선순위에서 충돌할 수 있기 때문에 이런 점 위주로 보완해 나갈 수 있지 않을까?
+
+## 7.2 Evaluation
+- Fair comparison between different fairness methods
+   * 공정성 연구에서의 어느정도 standard 가 있어야 한다. data preprocessing, hyperparameter, metrics 등에서 누군가는 기준을 잡아주어야 한다.
+
+- Dataset for new emerging scenarios
+   * 예를 들어, 쇼츠비디오 같은 경우 기존의 데이터셋과는 아예 다른 새로운 형태의 데이터셋이기 때문에 이런 비디오들이 공정성 기준에 부합하는가?
+
+## 7.3 Algorithm Design
+- A win-win for fairness and accuracy
+   * 정확성과 공정성 사이에 어느정도의 trade-off 가 있을 수 있다. 두 기준이 모두 윈윈하는 알고리즘을 구성해야 할 것임.
+
+- Fairness for both user and item
+   * 자명한 사실이지만, 사용자와 아이템 어느쪽도 소외되는 일이 없어야함.
+   * joint fairness를 만족시키려면,
+      
+      1. data-oriented methods 는 one-sided fairness 만 고려하므로 누군가가 연구를 헤줘야할 듯. -> 사실 저자도 별 생각없어서 책임전가하는 느낌임.
+      2. 이미 사용되고 있는 Pareto method 등을 이용해 multi-objective learning 을 수행.
+      3. 현존하는 re-rank 방식은 non-learnable 한 non-parameteric algorithm을 사용한다. 누군가가 learnable re-ranking algorithms 을 고안해 낸다면 one-sided fairness를 해결할 수 있을 것.
+
+- Fairness beyond accuracy
+   * criterion의 기준인 accuracy에만 집착하지말고 만족도 상승과 관련된 다양한 measurement를 사용해보자.
+
+- Causal inference for fairness
+   * causal 하다란?
+   > 나도 잘 모름
+
+   * 
+- Fairness with missing data
+   * 공정성과 관련된 정보가 누락되거나 조작된 경우 공정성을 향상시킬 수 있는 방안을 모색할 필요가 있다. 몇가지 시도가 있었으나, 아직 여지가 남아있는 부분이다.
+
+- Fairness in a real system
+   * 현실세계의 추천시스템은 주로 recall, ranking, and re-ranking 3 phase로 구성되어 있고 현실세계와 복잡한 상호작용을 끊임없이 한다는 높은 자유도를 가진다. 따라서 각 단계가 공정성을 보장할 수 있도록 시스템을 만드는 것이 중요하다.
+
+## 7.4 Explanation
+공정성을 달성하려면 불공정성이 왜 발생하는 지를 아는 것이 중요하겠지? 그러나 아직 이런 근본적인 문제를 다루려는 연구가 활발하지 않다...
+
+# **8. CONCLUSION**
+...
+
 
