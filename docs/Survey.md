@@ -209,19 +209,128 @@ use transfer learning, use contextual framework, add high var noise to VAE 등�
 
 <img width="1172" alt="스크린샷 2024-01-03 오후 3 32 54" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/df391c88-4d12-4219-8f26-a2c5472a1e84">
 
-#### Slot-wise
+### Slot-wise
+
+- Group recommendations
+
+Serbos: greed-based approach를 사용. 매 순간, 함수 $f_G(P,i)$ 를 최대화하는 item을 list에 추가하는 방식
+
+Lin: gredd-based approach는 동일하지만 Pareto efficiency 에 기반한 fairness-recommendation performance 둘 다 동시에 증가시킬 수 있는 
+
+$ \lambda SW(g,I) + (1-\lambda) F(g,I)$ 
+
+를 증가시키는 방식을 사용
+
+Sacharidis: 더 나아가 Pareto-optimal items candidate 를 찾은 뒤, linear aggregation 을 통해 순위 점수를 생성해 항목이 Top-K에 랭크될 확률을 추정한다.
+
+Kaya: 간단히 말해 fairness-recommendation performance 둘 중 어느것도 희생하지 않는 선에서 fixed-length recommendation lists 를 벗어나 fairness of different positions simultaneously를 고려한다.
+-> 그대로 옮겨 적긴 했는데 무슨 소린지 잘 이해가 안 됨.
 
 - general recommendation scenario
 
+기존 방법은 두 가지 주요 관점에서 공정성을 도입하는데, 하나는 공정성 constrint를 만족시키면서 utility 을 극대화하는 것이고, 다른 하나는 공정성과 utility(효용)을 함께 최적화하는 것입니다.
+-> ??? 무슨 말장난 하는 것도 아니고...
+
+전자: 최대한의 fairness constraint를 만족시켜야한다는 관점
+
+후자: 공정성과 utility 간의 trade-off 가 존재
+
+Zehlike: FA*IR 를 제시.
+
+FA*IR는 무엇이냐?: 두 그룹에 할당된 item queue가 2개 있다고 하자. 하나는 protect 큐이고 다른 하나는 unprotected 버전이다. 이때 각 queue는 relevance 순으로 나열되어 있다. 만약 두 그룹간의 공정성이 충족되지 못한다면 protected queue에서 가장 상관성이 높은 아이템을 뽑아서 리스트에 추가한다. 공정성을 만족한다면 그냥 전체에서 상관성이 높은 아이템을 뽑아서 리스트에 추가한다.
+
+Geyik: FA*IR을 3개 이상의 그룹에 사용가능하도록 만듦.
+
+
+tradeoff between fairness and recommendation performance(=utility)를 연구한 논문은 무엇이 있을까? 일단 기본 form은 아래와 같다.
+
+$ i^{*} = argmax_{i \in (R-C)} \space \lambda P(u,i) + (1-\lambda) F(u,i,C) $ 
+
+P는 performance, F는 fairness 관련 점수이다. 참고로 F는 논문마다 다르다.
+
+매번 리스트에 어떤 item을 추가할지 선택할 때(slot-wise) 위의 function을 최대화하는 $i^{*}$ 를 선택한다.
+
+Steck: 공정성 점수는 사용자 u의 이력 내 다양한 항목 그룹에 대한 분포와 추천 목록의 항목 그룹에 대한 분포 간의 KL-divergence로 정의된다.
+
+Karako and Manggala: Maximal Marginal Relevance 라는 것을 도입해, 새 아이템 i가 두 그룹 간의 임베딩 차이에 어떻게 기여하는지를 item fairness score의 기준으로 삼았다.
+
+Liu: 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것을 이해.
+
+Sonboli: Liu의 아이디어에 기반해 item attribute에 따라 또 취향은 천차만별이 된다. 따라서 personalized fairness score 를 고려할 때 multiple item attributes을 고려해 주었고, better trade-off 를 보였다고 한다.
+
 - dynamic ranking scenario
-#### User-wise
 
--
+Morik: proportional controller에 기반한 방식을 제안했다. recommendation per- formance and fairness를 결합하면 linear startegy를 사용햇고 ranking 의 수가 충분히 크다면 fairness를 보장할 수 있다는 것을 증명했다.
 
--
+$\sigma_{\tau} = argmax_{d \in D} \space (\hat{R}(d \mid x) + \lambda err_{tau}(d)) $
+
+Yang and Ai: marginal fairness를 고려한다. 한 item을 리스트에 추가할 때 마다 공정성이 얼마나 커지느냐를 고려. marginal fairness를 최대화하는 그룹은 가장 낮은 utility/merit ratio을 가지고 있다. -> 그만큼 공정하시다는 것.
+
+요약하면, Slot-wise 방식은 한 사용자에게 제시할 list의 공정성을 최대화하는 방향으로 item by item으로 선택해 리스트를 채워나간다. 
+굉장히 직관적이고, 다루기 쉽지만 local optimum에 갇힐 수 있다는 점도 고려해야 되겠다.
+
+### User-wise
+
+리스트에다가 item 깔짝깔짝 넣기보다 유저에게 최적화된 list를 통째로 선택해주자! 라는 취지로 사용한다. 여기서 중요한 점은 re-ranking problem을 integer programming으로 바꿀 수 았다는 점이다.
+
+그렇다면 integer programming 은 무엇이냐?: GPT에 따르면,
+
+ "정수계획법"은 계획을 세울 때 어떤 자원을 어떻게 할당할지를 결정하는 수학적인 방법 중 하나입니다. 주로 선형 프로그래밍이나 최적화 문제를 해결하는 데 사용됩니다. 정수계획법은 이런 문제를 해결할 때 변수들이 정수값만을 가질 수 있도록 제약을 두는 방법입니다.
+
+라고한다. 자세한 건 더 알아봐야겠지만 변수를 정수로 제한한 상태로 최적화를 구상한다는 의미로 이해했다.
+
+#### - group recommendation scenario
+
+- Lin: slot-wise 에서 사용했던 objective function은 그대로 사용하되, 
+'''
+$ \lambda SW(g,I) + (1-\lambda) F(g,I) \space s.t \space \sum_{i}X_{i} = K, X_{i} \in 0,1 $ 
+'''
+
+라는 정수 제약조건을 걸었다. 
+
+사실 Np-hard에 속하는 문제라고, X를 0부터 1사이의 확률로 바꾸어서 푼다고 한단다.
+
+#### general recommendation scenario
+
+- Biega
+   - ILP를 사용해 어느정도 constraint를 걸어둠으로써 추천시스템의 성능저하를 막는다.
+
+- Singh and Joachims
+   - 문제를 선형 프로그래밍 문제로 공식화하고 확률적 순위 관점에서 해결한다.
+
+- Mehrotra:
+
+User-wise re-rank 방식은 사용자에게 개별적으로 최적화가 진행된 리스트를 추천해준다. slot-wise에 비하면 local-optimum에서 벗어날 수 있지만 시간이 좀 더 걸린다는 차이점이 있다. Global-wise와 비교하면 각 개인별로 리스트가 제공되지만 여전히 suboptimal의 가능성은 여전하다. 
+
+### Global-wise methods
+
+앞의 두 방식은 매번 각 user마다 할당되는 single 리스트를 생성하지만 global-wise는 multiple lists 를 만든다는 차이점이 있다.
+
+핵심 아이디어: global-optimum 에 더 다가갈 수 있겠지?? 여기서는 Mathematical programming 을 주 framework로 사용한다. variable을 0,1 로 제한해 사용자에게 추천하냐 마냐로 결정한다.
 
 
-#### Global-wise
+Li: integer programming에 기반한 solving 방식을 제안.
+
+Fu: Li의 방식 +  knowledge graphs 이용
+
+Mansoury:  
+
+Sürer: 
+
+
+
+
+joint fairness 방식 
+
+
+Patro: phase 1 에서는 노출 제약을 두고 사용자에게 greedy-recommend, phase 2에서는 제약을 없애고 추천이 빈약한 아이들에게 관련성 높은 물건들을 추천해준다.
+->  envy-free fairness for users and maximin-shared fairness for items. 을 동시에 달성
+
+Wu:  improve item fairness at the group level and user fairness at the individual level 에서 Pareto와의 차이점.
+뭔소리야??
+
+요약하면, 전역적 영향을 고려하고 매번 여러 목록의 순위를 다시 매깁니다.
+
 
 
 # **6. DATASETS FOR FAIRNESS RECOMMENDATION STUDY**
