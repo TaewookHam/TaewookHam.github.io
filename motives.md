@@ -5,7 +5,7 @@ description: >
   A curated collection of motivational links to inspire and drive goals.
 hide_description: true
 redirect_from:
-  - /motivation/
+  - /motives/
 ---
 
 # Motivation Hub

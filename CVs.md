@@ -5,7 +5,7 @@ description: >
   wanna be AI Engineer
 hide_description: false
 redirect_from:
-  - /CV/
+  - /CVs/
 ---
 
 # 함태욱(Taewook Ham)
