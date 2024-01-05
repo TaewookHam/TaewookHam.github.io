@@ -24,7 +24,7 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 
 1. 추천시스템에서 fairness 라는 것의 정확한 정의가 무엇이냐?
 
-2. fairness 를 어떤 관점으로 분류할 수 있을까?
+2. fairness를 어떤 관점으로 분류할 수 있을까?
 
 3. fairness를 측정할 metric은 무엇이 있을까?
 
@@ -42,7 +42,8 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 사실 '공정'이라는 단어는 추상적인 단어이면서도 상대적인 단어이기 때문에 딱 잘라 말하기는 굉장히 어렵다.
 그렇기 때문에 추천시스템의 공정성을 연구하는 다양한 논문에서도 각자 다른 방식으로 'fairness'를 해석하고 있다.
 
-1. 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
+첫번째, 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
+
 - Process Fairness (Procedure justice): 모델이 인종,성별같은 요소를 학습 피처에 넣느냐 안 넣느냐, 혹은 그 외의 학습요소들이 편향되지는 않았는가? 등을 체크
 
 - Outcome Fairness (Distributive justice): 모델을 통과해서 나온 결과물이 특정 인종에게 유리하게 작용하는가? 등을 체크
@@ -54,20 +55,20 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 <img width="1071" alt="스크린샷 2024-01-02 오후 3 30 37" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/9bed107c-7895-43e2-8d22-6b0a04327ce3">
 
 <br/>
-2. target을 기준으로 2차적으로 나누어 졌다면, 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
+두번째, target을 기준으로 2차 분류가 됐다면 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
 <br/>
-그리고 기존 연구들은 보통 그룹 공정성을 확보하는 식으로 연구를 진행해왔다. 사실 개개인도 어떻게 보면 1인 그룹이라고 볼 수도 있기때문에 크게 신경쓰지 않아도 될 것같다.
+그리고 기존 연구들은 보통 그룹 공정성을 확보하는 식으로 연구를 진행해왔다. 사실 개개인도 어떻게 보면 1인 그룹으로 여길 수도 있기 때문에 큰 개념에서는 group 이 individuals 의 개념을 덮고 있다고 봐도 무방하다.
 
-3. concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 가 선행연구가 꽤 있던 부분이다.
+세번째, concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 에 대해서는 연구가 많이 진행된 상태이다.
 
-* CO: input 이 비슷하면 output도 비슷해야 한다.
+* CO: 비슷한 사람끼리는 output도 비슷해야 한다 + 서로 다른 그룹 간의 output이 비슷해야 한다.
 
 * CA: 결과값이 특정 능력이나 가치에 정확히 대응되어야 한다고 주장한다.
-단, merit는 그때그때 다르다.
+단, merit(가치)는 그때그때 다르다.
 
 * Rawlsian Maximin Fairness: 여러 그룹 들의 outcome value 가 있을 때 가장 worst 한 놈을 극대화 해야한다. 다시 말해 저점을 최대한 끌어올린다는 개념이다.
 
-그러나 정의가 여러개 있으므로 자연스레 어떤 정의가 우선시 되어야 하는가? 라는 의문이 따라옴. 대부분의 연구는 multi 보다 single definition만을 다루기 때문에 이부분은 더 탐구여지가 남아있다.
+그러나 각 분류 별로 정의가 여러개 있으므로 자연스레 어떤 정의가 우선시 되어야 하는가? 라는 의문이 따라옴. 대부분의 연구는 single definition을 충족 시키는 법을 다루기 때문에 이부분은 더 탐구여지가 남아있다.
 
 또한 저자는 공정성 Bias, Diversity, and Privacy 등의 조건을 만족하면서도, 너무 얽매이지도 말아야 한다고 언급하고 있다.(공정이라는 개념은 참 어려운 것 같다...)
 
@@ -81,29 +82,26 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
 1. Subject: 주체가 누구냐? 
 
-<center>
-<img width="484" alt="스크린샷 2024-01-03 오전 10 34 04" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/fe785d74-e2dd-447e-8926-b2adaab242a5">
-</center>
-{: width="68%", height="68%"}
+   <img width="484" alt="스크린샷 2024-01-03 오전 10 34 04" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/fe785d74-e2dd-447e-8926-b2adaab242a5">{: width="68%", height="68%"}
 
 - 사람이 공정한 대접을 받아야 하냐, 아이템이 공정한 대접을 받아야 하냐? 아니면 둘다냐?
 
 2. Granularity(세분성): 공정성의 범위는 어느 정도가 적당하냐? 
-<center>
-<img width="481" alt="스크린샷 2024-01-03 오전 10 36 25" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/e88488d7-748e-4a81-9b79-1989964dc7ce">
-</center>
-{: width="68%", height="68%"}
 
-- 단일 추천리스트가 공정성을 만족해야하느냐, 아니면 특정 시간동안 누적된 추천 리스트가 공정한 분포를 가지느냐로 구분
+   <img width="481" alt="스크린샷 2024-01-03 오전 10 36 25" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/e88488d7-748e-4a81-9b79-1989964dc7ce">{: width="68%", height="68%"}
+   
+   단일 추천리스트가 공정성을 만족해야하느냐, 아니면 특정 시간 혹은 기준동안 누적된 추천 리스트가 공정한 분포를 가지느냐로 구분.
 
-3. Optimization Object: 모델과 사용자의 상호작용 중 어느쪽을 더 중시할거냐?
+   논문에서는 남성 저자와 여성 저자의 책 추천을 예로 들었다. 사실 single-list 마다 공정성을 만족시키는 것은 쉽지 않아서 몇몇 기존 연구들은 averaging 기법을 사용하기도 한다.
 
-<center>
-<img width="485" alt="스크린샷 2024-01-03 오전 10 37 13" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/16ad348e-7c7b-4533-9da5-eac4960c7d42">
-</center>
-{: width="68%", height="68%"}
+3. Optimization Object: 모델의 output과 사용자의 reaction 중 어느쪽을 더 중시할거냐?
 
-- 모델이 사용자에게 제공하는 output이 공정해지느냐, 아니면 추천에 의한 reaction이 공정하게 나오는 것을 목표로 하는가?
+
+   <img width="485" alt="스크린샷 2024-01-03 오전 10 37 13" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/16ad348e-7c7b-4533-9da5-eac4960c7d42">{: width="68%", height="68%"}
+   
+   모델이 사용자에게 제공하는 output이 공정해지느냐, 아니면 추천에 의한 reaction이 공정하게 나오는 것을 목표로 하는가?
+
+   사람들의 feedback은 변덕이 심하고 예측하기가 매우 까다롭기 때문에 impact-base 가 treatment-base 보다 연구하기 어렵다.
 
 # **4. MEASUREMENTS OF UNFAIRNESS IN RECOMMENDATION**
 ---
