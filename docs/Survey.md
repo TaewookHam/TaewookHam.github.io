@@ -66,7 +66,10 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 * CA: 결과값이 특정 능력이나 가치에 정확히 대응되어야 한다고 주장한다.
 단, merit(가치)는 그때그때 다르다.
 
+* Counterfactual Fairness: 한 개인의 소속 그룹이 바뀌더라도 그 output이 바뀌어서는 안된다.
+
 * Rawlsian Maximin Fairness: 여러 그룹 들의 outcome value 가 있을 때 가장 worst 한 놈을 극대화 해야한다. 다시 말해 저점을 최대한 끌어올린다는 개념이다.
+
 
 그러나 각 분류 별로 정의가 여러개 있으므로 자연스레 어떤 정의가 우선시 되어야 하는가? 라는 의문이 따라옴. 대부분의 연구는 single definition을 충족 시키는 법을 다루기 때문에 이부분은 더 탐구여지가 남아있다.
 
@@ -84,9 +87,9 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
    <img width="484" alt="스크린샷 2024-01-03 오전 10 34 04" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/fe785d74-e2dd-447e-8926-b2adaab242a5">{: width="34%", height="34%"}
 
-- 사람이 공정한 대접을 받아야 하냐, 아이템이 공정한 대접을 받아야 하냐? 아니면 둘다냐?
+   사람이 공정한 대접을 받아야 하냐, 아이템이 공정한 대접을 받아야 하냐? 아니면 둘다냐? joint 를 고려하는 것이 best겠지만 그렇게 쉬운 일이 아니기 때문에 아직 연구가 많이 없다.
 
-2. Granularity(세분성): 공정성의 범위는 어느 정도가 적당하냐? 
+2. Granularity(세분성): 공정성이 개별적이냐 전체적이냐? 
 
    <img width="481" alt="스크린샷 2024-01-03 오전 10 36 25" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/e88488d7-748e-4a81-9b79-1989964dc7ce">{: width="34%", height="34%"}
    
@@ -103,66 +106,78 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
    사람들의 feedback은 변덕이 심하고 예측하기가 매우 까다롭기 때문에 impact-base 가 treatment-base 보다 연구하기 어렵다.
 
-# **4. MEASUREMENTS OF UNFAIRNESS IN RECOMMENDATION**
+# **4. Measurements of Unfairness in Recommendatoin**
 ---
+대부분의 연구가 outcome definition 기반 CO or CA view를 다루고 있기 때문에 이 두 가지 위주로 먼저 설명 후 나머지 view에 대한 metrics를 소개
+
+CA는 원래 KL-div 와 L1-norm 을 유용하게 사용했었는데, 평균처럼 단순한 모멘텀을 사용해 high-order를 표현해내지 못한 다는 점과 user-item fairness를 동시에 고려하지 못한다는 단점이 있었다.
+
+따라서 첫번째 단점을 보완하기 위해 metric이 KS, ANOVA 등이 나왔고,
+두번째 단점을 보완하기 위해서는 각 아이템에서 user-fairness를 고려후 aggregate하는 방식이 나왔다.
 
 ### *Metrics for CO*
 
-Consistent fairness의 목적은 input이 비슷하면 output이 비슷해야한다는 것이다. 이 사실에 기반해 각 개인 혹은 각 그룹간의 utility inconsistency를 확인할 수 있는 metrics 를 사용한다.
-*utility 라는 표현을 사용했는데, 효용성 혹은 퍼포먼스 정도로 생각하는게 좋을 듯 하다.
+Consistent fairness의 목적은 individual 간의 input이 비슷하면 output이 비슷해야한다는 것이다. 이 사실에 기반해 각 개인 혹은 각 그룹간의 utility inconsistency를 확인할 수 있는 metrics 를 사용한다.
+
+### For 2 or more groups
 
 |Metrics|Subject|Details|
 |------------------|---|---|
-|Absoloute Difference|둘 다|-|
-|KS statistic|user|Area|
+|Absoloute Difference|both|-|
+|KS statistic|user|nonparametric test used to determine the equality of two distributions -> high-order inconsistency를 반영가능|
 |rND,rKL, and rRd|item|measure item exposure fairness|
 |Pairwise Ranking Accuracy Gap|item|PRAG measures the unfairness of pairwise ranking accuracy|
 |Value Unfairness and its variants|user|measure inconsistency in signed prediction error between two user groups|
-|Variance|||
-|Min-Max Difference|||
-|F-statistic of ANOVA|||
-|Gini coefficient|||
-|Jain’s index|||
-|Entropy||-|
-|Min-Max Ratio||-|
-|Least Misery.||-|
+|Variance||group or individual -level 어디서든 사용가능|
+|Min-Max Difference|both|difference between the maximum and the minimum of all allocated utilities.|
+|F-statistic of ANOVA||determine any statistically significant differences between the mean values of three or more independent groups|
+
+### For individual fairness
+|Metrics|Possible subject|Details|
+|------------------|---|---|
+|Gini coefficient|both|more closer to 0, more fairer -> 식은 흔히 쓰는 로렌츠곡선으로 이해하면 됨|
+|Jain’s index|both|transition from network traffic to fair recommendation|
+|Entropy|both|use minus sign here, and the lower, the fairer|
+|Min-Max Ratio|both|min utility to max utility|
+|Least Misery|both|minimum of all allocated utility|
 
 
 ### *Metrics for CA*
 
-Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f$ 와 utility 분포 $p$ 를 비교한다.
+Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac {Merit(v_{i})} {\sum_{j} Merit(v_{j})} $ 와 utility 분포 $ p(v_{i}) = \frac {f(v_{i})} {\sum_{j} f(v_{j})}$ 를 비교한다.
 
-그러니까 가지고 있는 merit와 비슷한 utiltiy 분포를 가지고 있어야 한다.-> merit 가 utility 를 따라가야한다.
+다시 말해 공정하려면, 그 그룹(개인)이 가지고 있는 merit와 비슷한 utiltiy 분포를 가지고 있어야 한다.-> merit 가 utility 를 따라가야한다.
 
 
-|Metrics|Subject|설명|
-|------------------|---|---|
-|Skew|||
-|KL-divergence||-|
-|NDKL|||
-|JS-divergence||symmetric version of KL-div|
-|Overall Disparity|||
-|Generalized Cross entropy||measures the average disparity of the proportion of the utility and merit among different groups.|
-|L1-norm||-|
+|Metrics|Subject|Brief explain|objective|
+|------------------|---|---|---|
+|Skew|item, can be applied to user|분포가 어느 한쪽으로 쏠려서는 안된다. 누구는 조금 일하면서 많이 벌고, 누구는 많이 일하지만 조금 버는 것을 지양|maximin + minimax|
+|KL-divergence|item, can be applied to user|두 분포의 차이를 계산하는 대표적인 metric|lower|
+|NDKL|only item|1 to K까지 의 top-i ranking KL-div의 summation 기반|lower|
+|JS-divergence|item, can be applied to user|symmetric version of KL-div|lower|
+|Overall Disparity|item, can be applied to user|모든 그룹들 간의 p/p_f 비율 차를 계산한 후 average 계산|lower|
+|Generalized Cross entropy|both|두 확률분포가 서로 어떻게 다른가를 측정|higher|
+|L1-norm|item, can be applied to user|treat the merit and utility distributions as vectors and then use the L1-norm to calculate the distance|lower|
 
-#### <u> *Co 와 CA의 몇몇 metrics들은 서로 interconvertible 하다.*</u>
+#### *<span style="color:#FFE6E6">Co 와 CA의 몇몇 metrics들은 서로 interconvertible 하다. </span>*
 
+1. 예를 들어 확률 분포 $ p_f $ 가 flat 한 분포라면, 모든 사람이 가지고 있는 merit가 동일하다는 뜻이다. 따라서 similar individuals -> similar output 이라는 것과 같아져 CO statement로 이해할 수도 있다.
+2. CO defintion에서 $f (v)$ 를 $  \frac{p(v)}{p_{f}(v)} $ 로 바꾼다면 CA statement와 동일해진다고 이해할 수 있다. 
 
 ### *Metrics for Others*
 
+구체적인 설명은 되어있지 않지만 요약하면 다음과 같다.
 
+|Metrics|Subject|설명||
+|------------------|---|---|---|
+|Envy-free Fairness|Group|m-envy-free group num to entire group G 로 계산||
+|Envy-free Fairness|General|Envy-degree를 통해 계산|lower|
+|Metrics for Counterfactual Fairness(CF)||predict fairness-related attributes based on user embeddings because user embeddings are independetn from fairness-related attributes||
+|Metrics for Rawlsian Maximin Fairness (RMF)||utility of the worst case or bottom n%|higher|
+|Metrics for Maximin-shared Fairness(MSF)||proportion of individuals satisfying this condition, where the maximin share for every item is a constant value|higher|
+|Metrics for Process Fairness(PR)||fairness-related attributes 로부터 독립적인 fair representation을 측정한다.||
 
-|Metrics|Subject|설명|
-|------------------|---|---|
-|Envy-free Fairness|||
-|CF|||
-|RMF|||
-|MSF|||
-|PR|||
-
-나중에 읽어보자.
-
-# **5. METHODS FOR FAIR RECOMMENDATION**
+# **5. Method for Fair Recommendation**
 ---
 
 공정한 추천을 위해서 사용할 수 있는 메소드나 알고리즘은 어떤 것이 있을까?
@@ -171,33 +186,42 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f$ 와 utility �
 
 1. Data-oriented method: 데이터를 건드려서 불공정성을 해결하는 것
 2. Ranking methods: 모델이 공정한 추천을 학습할 수 있도록 만드는 것
-3. Re-ranking: ouput이 공정할 수 있도록 건드리는 것
+3. Re-ranking: 공정성을 위해 output을 건드리는 것
 
 ## Data-oriented methods
 
 다양하지는 않음
 
-Re-sampling dataset -> 성능 별로 -> Adding fake data -> 시간소요 너무 큼
+Ekstrand: Re-sampling dataset -> 성능 별로
+
+Rastegarpanah: data poisoning + add antidote data -> antidote data 수정하는 방향으로 학습 -> 시간소요 너무 큼
 
 데이터를 만지는 것은 pipeline 앞부분 건드는 거기 때문에 컨트롤하기는 용이하지만, modeling 파트에서 무슨일이 벌어질지 모르기 때문에 성능향상에 있어서는 케바케다.
 
 ## Ranking methods
 
+추천 모델 자체를 수정하거나 optimization target을 변경해 fair representation을 높이는 방식. 데이터 지향 방식과 비교했을 때 더 직관적이다는 장점이 있다. 그렇지만 re-rank 과정에서 공정성이 저하될 수도 있다.
+
 - regularization-based methods
 - adversarial learning-based methods 
 - reinforcement learning-based methods
 
-#### regularization-based methods
+### regularization-based methods
 
-모델에 제약을 주는 방식. 
+모델에 제약을 주는 방식.  
 Loss function은 
-$L = L_{rec} + \lambda L_{fair} $ 꼴
+
+$L = L_{rec} + \lambda L_{fair} $ 꼴로 나타낼 수 있다.
+
+Direct 방식은 앞서 언급한 fairness evaluation metrics 을 regularization term에 직접 넣는 것. 단, 당연히 미분가능한 것만 넣을 수 있다. exposure or ranking 같은 metrics 는 미분불가능한 경우가 많으므로, rating prediction 같은 미분가능한 케이스에서만 사용가능하다. 
+
+Indirect 방식도 있는데, 결과적으로 indirect 방식이 더 나은 결과를 보였다고 한다.
 
 point-wise
 
 pair-wise
 
-#### adversarial learning-based methods
+### adversarial learning-based methods
 
 adverserial learning 이란? 
 
@@ -207,7 +231,7 @@ $ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$
 Recommender system의 입장에서는 당연히 Loss 를 줄여야하고, Discriminator 는 짭과 찐을 잘 구별해서 Loss를 키워야 한다.
 
 
-#### reinforcement learning-based methods
+### reinforcement learning-based methods
 
 장기적인 관점에서의 최대한의 공정성을 추구하려고 한다는 특징이 있다.
 
