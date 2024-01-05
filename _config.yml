@@ -64,8 +64,8 @@ menu:
   - title:             Projects
     url:               /404/
   - motivation:        Motivations
-    url:               /404/
-    
+    url:               /motives/
+
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
 # legal:

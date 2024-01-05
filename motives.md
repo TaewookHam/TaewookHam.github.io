@@ -12,40 +12,33 @@ redirect_from:
 
 <!--author-->
 
-## Find Your Inspiration
-
-A handpicked selection of motivational links to fuel your passion and drive.
-
-1. this list will be replaced by the toc
-{:toc .large-only}
-
-![Motivation](assets/img/motivation/motivation-image.jpg){:.lead width="1920" height="1080" loading="lazy"}
-
-A glimpse of the motivational journey.
-{:.figcaption}
-
 ## Quotes to Live By
 
-> "The only way to do great work is to love what you do." - Steve Jobs
+> When the angel of the LORD appeared to Gideon, he said, "The LORD is with you, mighty warrior." - Judges 6:12
 {:.lead}
 
-> "Success is not final, failure is not fatal: It is the courage to continue that counts." - Winston Churchill
-{:.lead}
-
-> "Believe you can and you're halfway there." - Theodore Roosevelt
+> If that is how God clothes the grass of the field, which is here today and tomorrow is thrown into the fire, will he not much more clothe you, O you of little faith? - Mathew 6:30
 {:.lead}
 
 ## Inspirational Videos
 
 <!--videos-->
+https://youtu.be/VO3ZF92I-_I?si=Nfp1_desvWGuEo4R
+
+https://youtu.be/meGGn0ANT0k?si=oSwa5VemWknY-Y0M
 
 ## Articles That Ignite
 
 <!--articles-->
+https://m.blog.naver.com/hellopolicy/150110297887
+
+https://brunch.co.kr/@foohaha1/44
 
 ## Success Stories
 
 <!--stories-->
+
+<span style="background-color:#F5F5F5"> 언젠간 내 얘기가 여기에 들어갈 수 있도록 노력하자! </span>
 
 ## Keep Going
 
@@ -53,7 +46,9 @@ Remember, the journey is as important as the destination. Keep going, stay motiv
 
 ## Get Started Today
 
-Ready to take the first step towards your goals? Start your journey now.
+내가 영원히 이겨야할 상대는 과거의 나다.
 
-{% include action_button.md text="Start Now" link="#" %}
+실패를 두려워하지 말자.
+
+{% include action_button.md text="Start Now" link="https://taewookham.github.io" %}
 
