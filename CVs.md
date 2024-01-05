@@ -1,11 +1,11 @@
 ---
 layout: CV
-# image: /assets/img/blog/tae11.jpg
+image: /assets/img/blog/hydejack-9.jpg
 description: >
   wanna be AI Engineer
 hide_description: false
 redirect_from:
-  - /download/
+  - /CV/
 ---
 
 # 함태욱(Taewook Ham)
@@ -33,5 +33,4 @@ htw0618@kaist.ac.kr
 ## Link
 ---
 - Github: https://github.com/TaewookHam
-
-- LucentBlock: https://www.notion.so/Assignment-1-002b09f8753d4faabe030cbfba5a5d1f
+- What I did in LucentBlock: https://www.notion.so/Assignment-1-002b09f8753d4faabe030cbfba5a5d1f

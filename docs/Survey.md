@@ -206,7 +206,7 @@ Rastegarpanah: data poisoning + add antidote data -> antidote data 수정하는 
 - adversarial learning-based methods 
 - reinforcement learning-based methods
 
-### regularization-based methods
+### Ranking: regularization-based methods
 
 모델에 제약을 주는 방식.  
 Loss function은 
@@ -218,10 +218,13 @@ Direct 방식은 앞서 언급한 fairness evaluation metrics 을 regularization
 Indirect 방식도 있는데, 결과적으로 indirect 방식이 더 나은 결과를 보였다고 한다.
 
 point-wise
+- Zhu: predicted score와 fairness-related attributes 의 correlation을 낮추기 위해서 두 tensor를 수직으로 만든다. -> 솔직히 loss function에 대한 설명이 부족해서 수식 자체를 정확히 이해하지는 못함...
 
 pair-wise
 
-### adversarial learning-based methods
+- Beutal: 
+
+### Ranking: adversarial learning-based methods
 
 adverserial learning 이란? 
 
@@ -231,7 +234,7 @@ $ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$
 Recommender system의 입장에서는 당연히 Loss 를 줄여야하고, Discriminator 는 짭과 찐을 잘 구별해서 Loss를 키워야 한다.
 
 
-### reinforcement learning-based methods
+### Ranking: reinforcement learning-based methods
 
 장기적인 관점에서의 최대한의 공정성을 추구하려고 한다는 특징이 있다.
 
