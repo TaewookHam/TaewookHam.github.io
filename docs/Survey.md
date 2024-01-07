@@ -40,9 +40,9 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 추천시스템에서 말하는 '공정하다' 라는 뜻의 정의는 무엇일까?
 
 사실 '공정'이라는 단어는 추상적인 단어이면서도 상대적인 단어이기 때문에 딱 잘라 말하기는 굉장히 어렵다.
-그렇기 때문에 추천시스템의 공정성을 연구하는 다양한 논문에서도 각자 다른 방식으로 'fairness'를 해석하고 있다.
+그렇기 때문에 추천시스템의 공정성을 연구하는 다양한 논문에서도 각자 다른 방식으로 'fairness'를 해석하고 있다. 다른 domain 에서도 공통적으로 사용하는, fairness의 정ㅇ
 
-<span style="background-color:#F5F5F5"> 첫번째, </span> 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
+<span style="background-color:orange"> 첫번째, </span> 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
 
 - Process Fairness (Procedure justice): 모델이 인종,성별같은 요소를 학습 피처에 넣느냐 안 넣느냐, 혹은 그 외의 학습요소들이 편향되지는 않았는가? 등을 체크
 
@@ -55,11 +55,11 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 <img width="1071" alt="스크린샷 2024-01-02 오후 3 30 37" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/9bed107c-7895-43e2-8d22-6b0a04327ce3">
 
 <br/>
-<span style="background-color:#F5F5F5"> 두번째, </span> target을 기준으로 2차 분류가 됐다면 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
+<span style="background-color:orange"> 두번째, </span> target을 기준으로 2차 분류가 됐다면 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
 <br/>
 그리고 기존 연구들은 보통 그룹 공정성을 확보하는 식으로 연구를 진행해왔다. 사실 개개인도 어떻게 보면 1인 그룹으로 여길 수도 있기 때문에 큰 개념에서는 group 이 individuals 의 개념을 덮고 있다고 봐도 무방하다.
 
-<span style="background-color:#F5F5F5"> 세번째, </span> concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 에 대해서는 연구가 많이 진행된 상태이다.
+<span style="background-color:orange"> 세번째, </span> concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 에 대해서는 연구가 많이 진행된 상태이다.
 
 * CO: 비슷한 사람끼리는 output도 비슷해야 한다 + 서로 다른 그룹 간의 output이 비슷해야 한다.
 
@@ -79,9 +79,9 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
 <img width="1152" alt="스크린샷 2024-01-02 오후 3 37 20" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ee4df7eb-4a14-427e-a1a3-59a4444d81b3">
 
-# **3. VIEWS OF FAIRNESS IN RECOMMENDATION**
+# **3. Views of Fairness in Recommendation**
 ---
-추천시스템을 어떤 관점으로 분류할 수 있을까?
+공정함의 할당 과정을 어떤 관점으로 분류할 수 있을까?
 
 1. Subject: 주체가 누구냐? 
 
@@ -134,8 +134,8 @@ Consistent fairness의 목적은 individual 간의 input이 비슷하면 output�
 
 ### For individual fairness
 |Metrics|Possible subject|Details|
-|------------------|---|---|
-|Gini coefficient|both|more closer to 0, more fairer -> 식은 흔히 쓰는 로렌츠곡선으로 이해하면 됨|
+|---------------|---|---|
+|Gini coefficient|both|more closer to 0, more fairer so, 흔히 쓰는 로렌츠곡선으로 식을 이해하면 됨|
 |Jain’s index|both|transition from network traffic to fair recommendation|
 |Entropy|both|use minus sign here, and the lower, the fairer|
 |Min-Max Ratio|both|min utility to max utility|
@@ -166,7 +166,7 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
 ### *Metrics for Others*
 
-구체적인 설명은 되어있지 않지만 요약하면 다음과 같다.
+   요약하면 다음과 같다.
 
 |Metrics|Subject|설명||
 |------------------|---|---|---|
@@ -222,7 +222,7 @@ point-wise
 
 pair-wise
 
-- Beutal: 
+- Beutal: they add the residual correlations of fairness-related attributes and predicted preferences as regular terms to motivate the model to have similar prediction accuracy across item groups
 
 ### Ranking: adversarial learning-based methods
 
