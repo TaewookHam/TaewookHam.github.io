@@ -58,7 +58,7 @@ author:
 # Add links to the sidebar.
 menu:
   - title:             CV
-    url:               /CVs/
+    url:               /example/
   - title:             Paper Review
     url:               /docs/
   - title:             Projects
