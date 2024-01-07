@@ -14,7 +14,7 @@
 
 # General settings
 # ---------------------------------------------------------------------------------------
-# future: true
+future: true
 
 # Language of your content in 2-letter code, e.g.: en, de.
 # You may also provide a location, e.g.: en-us, de_AT.
@@ -58,13 +58,13 @@ author:
 # Add links to the sidebar.
 menu:
   - title:             CV
-    url:               /example/
+    url:               /docs/
   - title:             Paper Review
     url:               /docs/
   - title:             Projects
     url:               /404/
-  # - motivation:        Motivations
-  #   url:               /motives/
+  - motivation:        Motivations
+    url:               /motives/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
