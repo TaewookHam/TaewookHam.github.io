@@ -1,25 +1,10 @@
 
----
-layout: page
-<!-- title: Paper Review
-description: >
-  Read & Write & Review the Papers
-hide_description: false
-sitemap: false
-permalink: /docs/ -->
----
-
-
-# My CV
-
-<!--author-->
-
-<!-- 이미지 추가 -->
+<!-- image -->
 <img src="/assets/img/myPhoto.jpg" alt="함태욱(Taewook Ham)">
 
 ## Personal
 ---
-18 June 1999</br>
+18 June 1999<br/>
 htw0618@kaist.ac.kr
 ## Education
 ---
