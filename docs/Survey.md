@@ -226,7 +226,8 @@ pair-wise
 
 ### Ranking: adversarial learning-based methods
 
-adverserial learning 이란? 
+Recommender model 외에  discriminator를 둔다. discriminator가 unfair information을 제거한 representation을 받아들이고 판별을 진행할 때, fair attribute을 구별해내지 못할 때야 공평성이 성립되었다고 볼 수 있다.
+예를 들어 설명하자면, 구글에서 프로그래머를 뽑을 때, discriminator가 남자인지, 여자인지를 
 
 Loss function은 
 $ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$ 
@@ -246,12 +247,11 @@ Recommender system의 입장에서는 당연히 Loss 를 줄여야하고, Discri
 
 use transfer learning, use contextual framework, add high var noise to VAE 등등의 방법을 사용 가능.
 
-
 ## Re-ranking methods
 
 장: 중간 모델이 아닌 결과를 조정하는 방식이기 때문에 가장 직관적인 해결 방법이다.
 
-단: candidate set이 작다면, performance 부분에서 손실이 있을 수 있다.
+단: candidate set이 작아서 performance 부분에서 손실이 있을 수 있다. 그리고 ranking stage에서 제시된 문제에 대해서는 해결 불가능하다.
 
 <img width="1172" alt="스크린샷 2024-01-03 오후 3 32 54" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/df391c88-4d12-4219-8f26-a2c5472a1e84">
 
@@ -312,7 +312,7 @@ $ i^{*} = argmax_{i \in (R-C)} \space \lambda P(u,i) + (1-\lambda) F(u,i,C) $
    - Maximal Marginal Relevance 라는 것을 도입해, 새 아이템 i가 두 그룹 간의 임베딩 차이에 어떻게 기여하는지를 item fairness score의 기준으로 삼았다.
 
 - Liu 
-   - 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것을 이해.
+   - 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것으로 이해.
 
 - Sonboli
    - Liu의 아이디어에 기반해 item attribute에 따라 또 취향은 천차만별이 된다. 따라서 personalized fairness score 를 고려할 때 multiple item attributes을 고려해 주었고, better trade-off 를 보였다고 한다.
@@ -390,10 +390,8 @@ One side fairness
 *Other than programming-based*
 
    - Mansoury
-      - !!
 
    - Zhu
-      - !!
 
 Joint fairness
 ----
@@ -415,6 +413,8 @@ Joint fairness
 일반적으로 그룹을 나눌 때, 데이터셋의 사용자 성별 혹은 물건 인기도같은 specific 한 특성으로 그룹을 나눈다. 그렇지만 기준이 될만한 뚜렷한 특성이 없을 경우 <br/>첫번째, Rawlsian maximin fairness처럼 아예 그룹보다 개인레벨에서 공정성을 따지는 연구를 하거나, <br/>두번째, 사용자 history나 item 인기도 등을 고려해 따로 그룹을 분할하는 방식을 선택한다.
 
 # **7. Future Directions**
+
+## 7.1 Definition
 
 사실 '공평'의 정확한 정의도 아직 잡혀있지 않으며 그 많은 정의들끼리 우선순위에서 충돌할 수 있기 때문에 이런 점 위주로 보완해 나갈 수 있지 않을까?
 
@@ -441,10 +441,14 @@ Joint fairness
    * criterion의 기준인 accuracy에만 집착하지말고 만족도 상승과 관련된 다양한 measurement를 사용해보자.
 
 - Causal inference for fairness
-   * causal 하다란?
-   > 나도 잘 모름
+   Causal inference in recommendation 이 
 
-   * 
+   > Causal inference 란? 어떤 사건 또는 조건이 다른 사건에 어떠한 영향을 미치는지를 이해하고 추론하는 통계학과 인과 관계에 관한 분야.
+
+   Causal infernece in recommender system 를 위해서는 아래의 두가지 문제를 해결해야 한다고 한다.
+   *  ID와 additional attributes 가 model과 causal 관계를 잘 구축할 수 있도록 그래프를 구성해야 한다. 
+   * causal graphs에서 unfair factors 의 영향을 어떻게 줄일 것이냐?
+
 - Fairness with missing data
    * 공정성과 관련된 정보가 누락되거나 조작된 경우 공정성을 향상시킬 수 있는 방안을 모색할 필요가 있다. 몇가지 시도가 있었으나, 아직 여지가 남아있는 부분이다.
 
@@ -452,9 +456,7 @@ Joint fairness
    * 현실세계의 추천시스템은 주로 recall, ranking, and re-ranking 3 phase로 구성되어 있고 현실세계와 복잡한 상호작용을 끊임없이 한다는 높은 자유도를 가진다. 따라서 각 단계가 공정성을 보장할 수 있도록 시스템을 만드는 것이 중요하다.
 
 ## 7.4 Explanation
-공정성을 달성하려면 불공정성이 왜 발생하는 지를 아는 것이 중요하겠지? 그러나 아직 이런 근본적인 문제를 다루려는 연구가 활발하지 않다...
+공정성을 달성하려면 불공정성이 왜 발생하는 지를 아는 것이 중요하겠지? 이는 앞서 언급한 causal inference 와도 연결되는 개념으로 꽤나 중요하다. 그러나 아직 이런 근본적인 문제를 다루려는 연구가 활발하지 않다...
 
-# **8. CONCLUSION**
-...
 
 
