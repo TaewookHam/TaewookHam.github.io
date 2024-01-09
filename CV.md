@@ -21,6 +21,6 @@ htw0618@kaist.ac.kr
 
 ## Link
 ---
-- Github: https://github.com/TaewookHam
-- What I did in LucentBlock: https://www.notion.so/Assignment-1-002b09f8753d4faabe030cbfba5a5d1f
+- Github: [https://github.com/TaewookHam](https://github.com/TaewookHam)
+- What I did in LucentBlock: [https://www.notion.so/Assignment-1-002b09f8753d4faabe030cbfba5a5d1f](https://www.notion.so/Assignment-1-002b09f8753d4faabe030cbfba5a5d1f)
 

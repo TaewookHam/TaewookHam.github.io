@@ -61,9 +61,10 @@ menu:
     url:               /CV/
   - title:             Paper Review
     url:               /docs/
-  # - title:             Projects
-  #   url:               /404/
-
+  - title:             Projects
+    url:               /404/
+  - title:             Motive
+    url:               /Motive/
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
 legal:
