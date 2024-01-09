@@ -24,7 +24,6 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 ## Recommender Systems
 
-* [A Survey on the Fairness of Recommender Systems]{:.heading.flip-title} --- A Survey on the Fairness of Recommender Systems
 
 * [NeuMF]{:.heading.flip-title} --- Neural Collaborative Filtering
 * [SASRec]{:.heading.flip-title} --- Self-Attentive Sequential Recommendation
@@ -50,7 +49,6 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 [SASRec]: SASRec.md
 [NGCF]: NGCF.md
 [Mult-VAE]: Mult_VAE.md
-[A Survey on the Fairness of Recommender Systems]: Survey.md
 
 <!-- [VAE]: VAE.md -->
 
