@@ -1,22 +1,25 @@
 
 ---
 layout: page
-image: /assets/img/blog/hydejack-9.jpg
+<!-- title: Paper Review
 description: >
-  wanna be AI Engineer
+  Read & Write & Review the Papers
 hide_description: false
-redirect_from:
-  - /CVs/
+sitemap: false
+permalink: /docs/ -->
 ---
 
-# 함태욱(Taewook Ham)
-Undergraduated: KAIST EE 18
+
+# My CV
+
 <!--author-->
+
+<!-- 이미지 추가 -->
+<img src="/assets/img/myPhoto.jpg" alt="함태욱(Taewook Ham)">
 
 ## Personal
 ---
-18 June 1999
-
+18 June 1999</br>
 htw0618@kaist.ac.kr
 ## Education
 ---
