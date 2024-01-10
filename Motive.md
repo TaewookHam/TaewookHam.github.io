@@ -24,18 +24,6 @@
 
 [https://brunch.co.kr/@foohaha1/44](https://brunch.co.kr/@foohaha1/44)
 
-## Success Stories
-
-<!--stories-->
-
-<span style="background-color:#F5F5F5"> 언젠간 내 얘기가 여기에 들어갈 수 있도록 노력하자! </span>
-
-## Keep Going
-
-Remember, the journey is as important as the destination. Keep going, stay motivated!
-
 ## Get Started Today
-
-내가 영원히 이겨야할 상대는 과거의 나다.
 
 실패를 두려워하지 말자.

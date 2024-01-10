@@ -9,18 +9,19 @@ sitemap: false
 ---
 # **1. Abstract & Introduction**
 ---
-~~뻥 안치고 처음 읽어보는 Review Paper의 양에 읽다가 죽을번 했다...~~
+~~Survey Paper의 양은 어마무시 했다...~~
+
+게다가 아직 연구를 위한 연구같은 느낌이 짙어 전체적으로 추상적인 내용을 다루어 조금 어려운 점이 있었다.
 
 해당 논문은 현재까지 진행된 추천시스템의 공정성 연구를 소개하고 앞으로의 방향성을 잡아 주는 논문이라고 볼 수 있다.
-
 
 추천시스템은 당연히 그 목적 자체가 Uitility 의 최대화라고 볼 수 있지만, 최근 들어 사용자의 background 에 관계없이 공정한 추천을 제시해야한다는 의견이 강조되고 있다. 따라서 fairness-aware 추천시스템, 즉 공정성을 반영한 추천시스템은 매우 중요하다.
 > Utility란? 클릭률 등 모델의 퍼포먼스에 대한 사용자의 만족도? 정도로 해석.
 
-> Fairness-related attributes란? gender, age, and race 등 차별의 원인이 될 수 있는 특성들을 의미
+> Fairness-related attributes란? gender, age, race 등 차별의 원인이 될 수 있는 특성들을 의미
 
 <br/>
-Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
+Survey Paper 에서 소개하는 포인트는 다음과 같다.
 
 1. 추천시스템에서 fairness 라는 것의 정확한 정의가 무엇이냐?
 
@@ -35,14 +36,14 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 7. 앞으로의 연구방향성은 무엇이 있는가?
 
   
-# **2. Definitions of Fairness in Recommendation**
+# **2. Definitions**
 ---
 추천시스템에서 말하는 '공정하다' 라는 뜻의 정의는 무엇일까?
 
 사실 '공정'이라는 단어는 추상적인 단어이면서도 상대적인 단어이기 때문에 딱 잘라 말하기는 굉장히 어렵다.
 그렇기 때문에 추천시스템의 공정성을 연구하는 다양한 논문에서도 각자 다른 방식으로 'fairness'를 해석하고 있다. 다른 domain 에서도 공통적으로 사용하는, fairness의 정ㅇ
 
-<span style="background-color:orange"> 첫번째, </span> 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
+<span style="background-color:orange"> 첫번째 </span>, 우선 과정 속 공정성을  중시하는 공정성과 결과의 공정성을 중시하는 공정성이 있다.
 
 - Process Fairness (Procedure justice): 모델이 인종,성별같은 요소를 학습 피처에 넣느냐 안 넣느냐, 혹은 그 외의 학습요소들이 편향되지는 않았는가? 등을 체크
 
@@ -55,11 +56,11 @@ Survey Paper 에서 집중하고 있는 포인트는 다음과 같다.
 <img width="1071" alt="스크린샷 2024-01-02 오후 3 30 37" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/9bed107c-7895-43e2-8d22-6b0a04327ce3">
 
 <br/>
-<span style="background-color:orange"> 두번째, </span> target을 기준으로 2차 분류가 됐다면 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
+<span style="background-color:orange"> 두번째 </span>, target을 기준으로 2차 분류가 됐다면 개개인이 모두 공정해야하느냐, 그룹별로 공정성이 보장이 되느냐로 나눌 수 있다.
 <br/>
 그리고 기존 연구들은 보통 그룹 공정성을 확보하는 식으로 연구를 진행해왔다. 사실 개개인도 어떻게 보면 1인 그룹으로 여길 수도 있기 때문에 큰 개념에서는 group 이 individuals 의 개념을 덮고 있다고 봐도 무방하다.
 
-<span style="background-color:orange"> 세번째, </span> concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 에 대해서는 연구가 많이 진행된 상태이다.
+<span style="background-color:orange"> 세번째 </span>, concept를 기준으로 나눌 수 있다. outcome이 각 개인 혹은 그룹과 어떤 관계를 맺을 수 있는가를 목표로 한다. 이중 CO 와 CA 에 대해서는 연구가 많이 진행된 상태이다.
 
 * CO: 비슷한 사람끼리는 output도 비슷해야 한다 + 서로 다른 그룹 간의 output이 비슷해야 한다.
 
@@ -79,9 +80,9 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
 <img width="1152" alt="스크린샷 2024-01-02 오후 3 37 20" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ee4df7eb-4a14-427e-a1a3-59a4444d81b3">
 
-# **3. Views of Fairness in Recommendation**
+# **3. Classification of Fairness Issues**
 ---
-공정함의 할당 과정을 어떤 관점으로 분류할 수 있을까?
+공정성을 할당하려고 하는데 어느 범위까지 할당할 것이냐? 에 대한 주제를 다루고 있다.
 
 1. Subject: 주체가 누구냐? 
 
@@ -93,9 +94,9 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
    <img width="481" alt="스크린샷 2024-01-03 오전 10 36 25" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/e88488d7-748e-4a81-9b79-1989964dc7ce">{: width="34%", height="34%"}
    
-   단일 추천리스트가 공정성을 만족해야하느냐, 아니면 특정 시간 혹은 기준동안 누적된 추천 리스트가 공정한 분포를 가지느냐로 구분.
+   단일 unit(추천리스트)이 공정성을 만족해야하느냐, 아니면 누적된 리스트들의 분포가 공정한 분포를 가지느냐로 구분.
 
-   논문에서는 남성 저자와 여성 저자의 책 추천을 예로 들었다. 사실 single-list 마다 공정성을 만족시키는 것은 쉽지 않아서 몇몇 기존 연구들은 averaging 기법을 사용하기도 한다.
+   사실 single-list 마다 공정성을 만족시키는 것은 쉽지 않아서 몇몇 기존 연구들은 averaging 기법을 사용하기도 한다.
 
 3. Optimization Object: 모델의 output과 사용자의 reaction 중 어느쪽을 더 중시할거냐?
 
@@ -106,14 +107,9 @@ fairness의 정의가 정리되어 있는 테이블은 다음과 같다.
 
    사람들의 feedback은 변덕이 심하고 예측하기가 매우 까다롭기 때문에 impact-base 가 treatment-base 보다 연구하기 어렵다.
 
-# **4. Measurements of Unfairness in Recommendatoin**
+# **4. Metrics**
 ---
-대부분의 연구가 outcome definition 기반 CO or CA view를 다루고 있기 때문에 이 두 가지 위주로 먼저 설명 후 나머지 view에 대한 metrics를 소개
-
-CA는 원래 KL-div 와 L1-norm 을 유용하게 사용했었는데, 평균처럼 단순한 모멘텀을 사용해 high-order를 표현해내지 못한 다는 점과 user-item fairness를 동시에 고려하지 못한다는 단점이 있었다.
-
-따라서 첫번째 단점을 보완하기 위해 metric이 KS, ANOVA 등이 나왔고,
-두번째 단점을 보완하기 위해서는 각 아이템에서 user-fairness를 고려후 aggregate하는 방식이 나왔다.
+대부분의 연구가 outcome definition 기반 CO or CA view를 다루고 있기 때문에 이 두 가지 위주로 먼저 설명
 
 ### *Metrics for CO*
 
@@ -146,8 +142,7 @@ Consistent fairness의 목적은 individual 간의 input이 비슷하면 output�
 
 Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac {Merit(v_{i})} {\sum_{j} Merit(v_{j})} $ 와 utility 분포 $ p(v_{i}) = \frac {f(v_{i})} {\sum_{j} f(v_{j})}$ 를 비교한다.
 
-다시 말해 공정하려면, 그 그룹(개인)이 가지고 있는 merit와 비슷한 utiltiy 분포를 가지고 있어야 한다.-> merit 가 utility 를 따라가야한다.
-
+공정하려면, 그 그룹(개인)이 가지고 있는 merit와 비슷한 utiltiy 분포를 가지고 있어야 한다.
 
 |Metrics|Subject|Brief explain|objective|
 |------------------|---|---|---|
@@ -190,227 +185,99 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
 ## Data-oriented methods
 
-다양하지는 않음
+데이터를 만지는 것은 pipeline 앞부분 수정하기 때문에 컨트롤하기는 쉬울 수 있지만, latter modeling 파트를 거치며 퍼포먼스가 오염될 수 있기 때문에 아직 효용적인 방식이 존재하지 않는다.
 
-Ekstrand: Re-sampling dataset -> 성능 별로
+- Ekstrand: Re-sampling dataset -> 성능 별로
 
-Rastegarpanah: data poisoning + add antidote data -> antidote data 수정하는 방향으로 학습 -> 시간소요 너무 큼
+- Rastegarpanah: data poisoning + add antidote data -> antidote data 수정하는 방향으로 학습 -> 시간소요 너무 큼
 
-데이터를 만지는 것은 pipeline 앞부분 건드는 거기 때문에 컨트롤하기는 용이하지만, modeling 파트에서 무슨일이 벌어질지 모르기 때문에 성능향상에 있어서는 케바케다.
+
 
 ## Ranking methods
 
 추천 모델 자체를 수정하거나 optimization target을 변경해 fair representation을 높이는 방식. 데이터 지향 방식과 비교했을 때 더 직관적이다는 장점이 있다. 그렇지만 re-rank 과정에서 공정성이 저하될 수도 있다.
 
-- regularization-based methods
-- adversarial learning-based methods 
-- reinforcement learning-based methods
+<details>
+<summary>Regularization-based methods</summary>
 
-### Ranking: regularization-based methods
+<!-- summary -->
+---
+   흔히 알고 있는 모델에 regularization term을 주어 제약을 주는 방식.
+   기본 Loss function에 fairness와 관련된 loss term을 추가해 
 
-모델에 제약을 주는 방식.  
-Loss function은 
+   $L = L_{rec} + \lambda L_{fair} $ 꼴로 나타낼 수 있다.
 
-$L = L_{rec} + \lambda L_{fair} $ 꼴로 나타낼 수 있다.
+   Direct 방식과 indirect 두가지 방식 중 골라 쓸 수 있는데, direct 방식은 은 앞서 언급한 fairness evaluation metrics 을 regularization term에 직접 넣는 방식이다. 단, 당연히 미분가능한 것만 넣을 수 있다.
 
-Direct 방식은 앞서 언급한 fairness evaluation metrics 을 regularization term에 직접 넣는 것. 단, 당연히 미분가능한 것만 넣을 수 있다. exposure or ranking 같은 metrics 는 미분불가능한 경우가 많으므로, rating prediction 같은 미분가능한 케이스에서만 사용가능하다. 
+   Indirect 방식은 paper에서 자체적으로 정의한 Loss 를 넣는 방식이다. 주로 indirect 방식이 더 나은 결과를 보였다고 한다.
 
-Indirect 방식도 있는데, 결과적으로 indirect 방식이 더 나은 결과를 보였다고 한다.
+</details>
 
-point-wise
-- Zhu: predicted score와 fairness-related attributes 의 correlation을 낮추기 위해서 두 tensor를 수직으로 만든다. -> 솔직히 loss function에 대한 설명이 부족해서 수식 자체를 정확히 이해하지는 못함...
+<details>
+<summary>Adversarial learning-based methods</summary>
 
-pair-wise
+<!-- summary -->
+---
+   Generator와 discriminator 가 경쟁적으로 학습하는 그 방식이다. 한 가지 차이점은 Recommender system에서는 generator 대신 filter module을 둔다는 것이다. Filter module이 unfair information를 가리고, discriminator가 unfair information을 제거한 representation에 대해서 판별을 진행할 때, fair attribute을 구별해내지 못할 때야 공평성이 성립되었다고 볼 수 있다.
 
-- Beutal: they add the residual correlations of fairness-related attributes and predicted preferences as regular terms to motivate the model to have similar prediction accuracy across item groups
+   Loss function은 일반적으로 아래와 같다.
 
-### Ranking: adversarial learning-based methods
+   $ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$
 
-Recommender model 외에  discriminator를 둔다. discriminator가 unfair information을 제거한 representation을 받아들이고 판별을 진행할 때, fair attribute을 구별해내지 못할 때야 공평성이 성립되었다고 볼 수 있다.
-예를 들어 설명하자면, 구글에서 프로그래머를 뽑을 때, discriminator가 남자인지, 여자인지를 
+</details>
 
-Loss function은 
-$ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$ 
+<details>
+<summary>Reinforcement learning-based methods</summary>
 
-Recommender system의 입장에서는 당연히 Loss 를 줄여야하고, Discriminator 는 짭과 찐을 잘 구별해서 Loss를 키워야 한다.
+<!-- summary -->
+---
+   강화학습을 이용한 추천시스템의 공정성 구축은 다른 방법과 비교해서 장기적이고 유동적으로 학습을 할 수 있다는 점이다.
 
+   강화학습에서처럼 agent가 fairness를 학습을 하면 fair reward를 극대화하는 방향으로 action과 state를 계속 update 한다. 그 다음에 critic network 가 이를 평가하는 방식으로, feedback과 update을 반복하다보면 fairness에 수렴한다는 아이디어이다.
 
-### Ranking: reinforcement learning-based methods
+   그러나 안정성이 떨어지고 offline-data를 가지고 평가하기는 어렵다는 단점도 있다.
 
-장기적인 관점에서의 최대한의 공정성을 추구하려고 한다는 특징이 있다.
+</details>
 
-강화학습을 이용한 추천시스템의 공정성 구축은 다른 방법과 비교해서 장기적이고 유동적으로 학습을 할 수 있다는 점이다.
+<details>
+<summary>Others</summary>
 
-그러나 안정성이 떨어지고 offline-data를 가지고 평가하기는 어렵다는 단점도 있다.
+<!-- summary -->
+---
+   use transfer learning, use contextual framework, add high var noise to VAE 등등의 방법을 사용 가능.
 
-#### Others
-
-use transfer learning, use contextual framework, add high var noise to VAE 등등의 방법을 사용 가능.
+</details>
 
 ## Re-ranking methods
 
-장: 중간 모델이 아닌 결과를 조정하는 방식이기 때문에 가장 직관적인 해결 방법이다.
-
-단: candidate set이 작아서 performance 부분에서 손실이 있을 수 있다. 그리고 ranking stage에서 제시된 문제에 대해서는 해결 불가능하다.
+이미 model을 거쳐서 output이 나왔는데 굳이 re-ranking로 재조정을 해야하는가?
+> 최근 trend가 바뀌어 사용자가 추천리스트에 대해 negative feedback을 줄 수도 있고, 사용자가 속한 그룹이 최근에 바뀌었을 수도 있기 때문에 re-rank 과정이 필요하다.
 
 <img width="1172" alt="스크린샷 2024-01-03 오후 3 32 54" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/df391c88-4d12-4219-8f26-a2c5472a1e84">
 
 ### Slot-wise
 
-#### - Group recommendations
-
-- Serbos 
-   - greed-based approach를 사용. 매 순간, 함수 $f_G(P,i)$ 를 최대화하는 item을 list에 추가하는 방식
-
-- Lin
-   - gredd-based approach는 동일하지만 Pareto efficiency 에 기반한 fairness-recommendation performance 둘 다 동시에 증가시킬 수 있는 
-
-      $ \lambda SW(g,I) + (1-\lambda) F(g,I)$ 
-
-      를 증가시키는 방식을 사용
-
-- Sacharidis
-   - Lin보다 더 나아가 Pareto-optimal items candidate 를 찾은 뒤, linear aggregation 을 통해 순위 점수를 생성해 항목이 Top-K에 랭크될 확률을 추정한다.
-
-- Kaya
-   - fairness-recommendation performance 둘 중 어느것도 희생하지 않는 선에서 fixed-length recommendation lists 를 벗어나 fairness of different positions simultaneously를 고려. -> 그대로 옮겨 적긴 했는데 무슨 소린지 잘 이해가 안 됨...
-
-#### - general recommendation scenario
-
-두가지 관점이 존재.
-
-첫번째는, 
-
-How to maximize utility satisfying fairness constraints??
-
-즉, performance 적인 부분은 어느정도 희생하되, 최대한의 fairness constraint를 만족시켜야한다는 관점이다.
-
-- Zehlike: 
-   - FA*IR 를 제시.
-
-   >FA*IR 이란? 
-   두 그룹에 할당된 item queue가 2개 있다고 하자. 하나는 protect 큐이고 다른 하나는 unprotected 버전이다. 이때 각 queue는 relevance 순으로 나열되어 있다. 만약 두 그룹간의 공정성이 충족되지 못한다면 protected queue에서 가장 상관성이 높은 아이템을 뽑아서 리스트에 추가한다. 공정성을 만족한다면 그냥 전체에서 상관성이 높은 아이템을 뽑아서 리스트에 추가한다.
-
-- Geyik: FA*IR을 3개 이상의 그룹에 사용가능하도록 만듦.
-
-
-두번째는 how to optimize the tradeoff between fairness and recommendation performance(=utility)?
-
-즉,공정성과 utility 간의 trade-off 를 최적화하는 관점이다.
-
-P는 performance, F는 fairness 관련 점수이다. 참고로 F는 논문마다 다르다.
-일단 기본 form은 아래와 같다.
-
-$ i^{*} = argmax_{i \in (R-C)} \space \lambda P(u,i) + (1-\lambda) F(u,i,C) $ 
-
-매번 리스트에 어떤 item을 추가할지 선택할 때(slot-wise) 위의 function을 최대화하는 $i^{*}$ 를 선택한다.
-
-- Steck
-   - 공정성 점수는 사용자 u의 이력 내 다양한 항목 그룹에 대한 분포와 추천 목록의 항목 그룹에 대한 분포 간의 KL-divergence로 정의된다.
-
-- Karako and Manggala 
-   - Maximal Marginal Relevance 라는 것을 도입해, 새 아이템 i가 두 그룹 간의 임베딩 차이에 어떻게 기여하는지를 item fairness score의 기준으로 삼았다.
-
-- Liu 
-   - 개인화된 re-ranking method를 제시한다. 사용자의 다양한 취향을 존중? 해준다는 것으로 이해.
-
-- Sonboli
-   - Liu의 아이디어에 기반해 item attribute에 따라 또 취향은 천차만별이 된다. 따라서 personalized fairness score 를 고려할 때 multiple item attributes을 고려해 주었고, better trade-off 를 보였다고 한다.
-
-#### - dynamic ranking scenario
-
-- Morik 
-   - proportional controller에 기반한 방식을 제안했다. recommendation per- formance and fairness를 결합하면 linear startegy를 사용햇고 ranking 의 수가 충분히 크다면 fairness를 보장할 수 있다는 것을 증명했다.
-
-      $\sigma_{\tau} = argmax_{d \in D} \space (\hat{R}(d \mid x) + \lambda err_{tau}(d)) $
-
-- Yang and Ai 
-   - marginal fairness를 고려한다. 한 item을 리스트에 추가할 때 마다 공정성이 얼마나 커지느냐를 고려. marginal fairness를 최대화하는 그룹은 가장 낮은 utility/merit ratio을 가지고 있다. -> 그만큼 공정하시다는 것.
-
-요약하면, Slot-wise 방식은 한 사용자에게 제시할 list의 공정성을 최대화하는 방향으로 item by item으로 선택해 리스트를 채워나간다. 
-굉장히 직관적이고, 다루기 쉽지만 local optimum에 갇힐 수 있다는 점도 고려해야 되겠다.
+Slot-wise 방식은 일반적으로 Greedy-algorithm을 사용하여 처음 주어진 list를 re-rank 한다. 한 번에 한 사용자에게 list를 제공하되, 매순간 fairness score를 최대화하는 방식으로 물건을 선택해 리스트를 채워나간다.
+직관적이고, 다루기 쉽다는 장점이 있지만, 쉽게 local optimum에 갇힐 수 있다는 점도 고려해야한다.
 
 ### User-wise
 
-리스트에다가 item 깔짝깔짝 넣기보다 유저에게 최적화된 list를 통째로 선택해주자! 라는 취지로 사용한다. 여기서 중요한 점은 re-ranking problem을 integer programming으로 바꿀 수 았다는 점이다.
-
-그렇다면 integer programming 은 무엇이냐?: GPT에 따르면,
-
-> "정수계획법"은 계획을 세울 때 어떤 자원을 어떻게 할당할지를 결정하는 수학적인 방법 중 하나입니다. 주로 선형 프로그래밍이나 최적화 문제를 해결하는 데 사용됩니다. 정수계획법은 이런 문제를 해결할 때 변수들이 정수값만을 가질 수 있도록 제약을 두는 방법입니다.
-
-라고한다. <br/> 
-자세한 건 더 알아봐야겠지만 변수를 정수로 제한한 상태로 최적화를 구상한다는 의미로 이해했다.
-
-#### - group recommendation scenario
-
-- Lin
-   - slot-wise 에서 사용했던 objective function은 그대로 사용하되,
-   
-      $ \lambda SW(g,I) + (1-\lambda) F(g,I) \\ s.t \space \sum_{i}X_{i} = K, X_{i} \in 0,1 $ 
-   
-      라는 정수 제약조건을 걸었다. 
-
-      사실 조건을 만족하면서 식을 최대화하는 것은 Np-hard에 속하는 문제라고 하며, X를 0부터 1사이의 확률로 바꾸어서 푼다고 한단다.
-
-#### - general recommendation scenario
-
-- Biega
-   - ILP를 사용해 어느정도 constraint를 걸어둠으로써 추천시스템의 성능저하를 막는다.
-
-- Singh and Joachims
-   - 문제를 선형 프로그래밍 문제로 공식화하고 확률적 순위 관점에서 해결한다.
-
-- Mehrotra:
-
-User-wise re-rank 방식은 사용자에게 개별적으로 최적화가 진행된 리스트를 추천해준다. slot-wise에 비하면 local-optimum에서 벗어날 수 있지만 시간이 좀 더 걸린다는 차이점이 있다. Global-wise와 비교하면 각 개인별로 리스트가 제공되지만 여전히 suboptimal의 가능성은 여전하다. 
+리스트에다가 item 하나하나 넣기보다 최적화 알고리즘을 통해 re-rank된 리스트 중 유저에게 가장 최적화된 list를 제공해주는 아이디어.
 
 ### Global-wise methods
 
-앞의 두 방식은 매번 각 user마다 할당되는 single 리스트를 생성하지만 global-wise는 multiple lists 를 만든다는 차이점이 있다. 이렇게 하면 global-optimum 에 더 다가갈 수 있겠지?? 라는 생각으로 접근한다.
-
-핵심 아이디어:  여기서는 Mathematical programming 을 주 framework로 사용한다. variable을 0,1 로 제한해 사용자에게 추천하냐 마냐로 결정한다.
-
-
-One side fairness
-----
-*Mathmatical Programming based*
-
-- User fairness
-   - Li
-      - integer programming에 기반한 solving 방식을 제안.
-
-   - Fu
-      - Li의 방식 +  knowledge graphs 이용
-
-
-
-- for item fairness
-   - Sürer 
-
-*Other than programming-based*
-
-   - Mansoury
-
-   - Zhu
-
-Joint fairness
-----
-   - Patro
-      - phase 1 에서는 노출 제약을 두고 사용자에게 greedy-recommend, phase 2에서는 제약을 없애고 추천이 빈약한 아이들에게 관련성 높은 물건들을 추천해준다. ->  envy-free fairness for users and maximin-shared fairness for items. 을 동시에 달성
-   
-   - Wu
-     - Wu:  improve item fairness at the group level and user fairness at the individual level 에서 Pareto와의 차이점. -> 뭔소리야??
-
-요약하면, 전역적 영향을 고려하고 매번 여러 목록의 순위를 다시 매긴다.
+User-wise 방식과 마찬가지로 최적화 알고리즘을 통해 유저에게 가장 최적화된 list를 제공해주는 방식은 비슷하다. 그러나 다수의 유저에게 동시다발적으로 다수의 리스트를 제공한다는 차이점이 있다. amortized fairness를 중시하는 관점으로서 제공된 리스트 그룹 전체의 분포가 공정한지에 더 초점을 두고있다.
 
 # **6. DATASETS FOR FAIRNESS RECOMMENDATION STUDY**
 
-#### <span style="color:red"> 정말 친절하게도 어떤 데이터셋이 어떤 attribute을 포함하고 있는지 표로 정리 해놓으셨단다!! </span>
-
 <img width="681" alt="스크린샷 2024-01-04 오후 2 26 47" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/f1c8721c-97bc-4e31-b459-64ec5bb19571">{:width= "90%", :height= "85%"}<br/>
+<span style="color:red"> 친절하게 실험에 사용된 데이터셋이 어떤 attribute을 포함하고 있는지 표로 정리 해놓으셨다 </span>
 각 데이터셋의 자세한 설명은 생략.
 
-일반적으로 그룹을 나눌 때, 데이터셋의 사용자 성별 혹은 물건 인기도같은 specific 한 특성으로 그룹을 나눈다. 그렇지만 기준이 될만한 뚜렷한 특성이 없을 경우 <br/>첫번째, Rawlsian maximin fairness처럼 아예 그룹보다 개인레벨에서 공정성을 따지는 연구를 하거나, <br/>두번째, 사용자 history나 item 인기도 등을 고려해 따로 그룹을 분할하는 방식을 선택한다.
+일반적으로 그룹을 나눌 때, 데이터셋의 사용자 성별 혹은 물건 인기도같은 specific 한 특성으로 그룹을 나눈다. <br/>
+그렇지만 만약 기준이 될만한 뚜렷한 특성이 없을 경우는 어떻게 할까??
+   - <span style="background-color:orange"> 첫번째 </span>, Rawlsian maximin fairness처럼 아예 그룹보다 개인레벨에서 공정성을 따지는 연구를 하거나, 
+   - <span style="background-color:orange"> 두번째 </span>, 사용자 history나 item 인기도 등을 고려해 따로 그룹을 분할하는 방식을 선택한다.
 
 # **7. Future Directions**
 
@@ -456,7 +323,8 @@ Joint fairness
    * 현실세계의 추천시스템은 주로 recall, ranking, and re-ranking 3 phase로 구성되어 있고 현실세계와 복잡한 상호작용을 끊임없이 한다는 높은 자유도를 가진다. 따라서 각 단계가 공정성을 보장할 수 있도록 시스템을 만드는 것이 중요하다.
 
 ## 7.4 Explanation
-공정성을 달성하려면 불공정성이 왜 발생하는 지를 아는 것이 중요하겠지? 이는 앞서 언급한 causal inference 와도 연결되는 개념으로 꽤나 중요하다. 그러나 아직 이런 근본적인 문제를 다루려는 연구가 활발하지 않다...
+공정성을 달성하려면 불공정성이 왜 발생하는 지를 아는 것이 중요하겠지? 이는 앞서 언급한 causal inference 와도 연결되는 개념으로 꽤나 중요하다. 그러나 아직 이런 근본적인 문제를 다루려는 연구가 활발하지 않다.
+
 
 
 
