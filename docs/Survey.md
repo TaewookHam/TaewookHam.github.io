@@ -129,7 +129,8 @@ Consistent fairness의 목적은 individual 간의 input이 비슷하면 output�
 |F-statistic of ANOVA||determine any statistically significant differences between the mean values of three or more independent groups|
 
 ### For individual fairness
-|Metrics|Possible subject|Details|
+
+|Metrics|Subject|Details|
 |---------------|---|---|
 |Gini coefficient|both|more closer to 0, more fairer so, 흔히 쓰는 로렌츠곡선으로 식을 이해하면 됨|
 |Jain’s index|both|transition from network traffic to fair recommendation|
