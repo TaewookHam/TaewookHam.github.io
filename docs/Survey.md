@@ -130,7 +130,7 @@ Consistent fairness의 목적은 individual 간의 input이 비슷하면 output�
 
 ### For individual fairness
 
-|Metrics|Subject|Details|
+|Metrics|Subject|details|
 |---------------|---|---|
 |Gini coefficient|both|more closer to 0, more fairer so, 흔히 쓰는 로렌츠곡선으로 식을 이해하면 됨|
 |Jain’s index|both|transition from network traffic to fair recommendation|
@@ -145,15 +145,15 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
 공정하려면, 그 그룹(개인)이 가지고 있는 merit와 비슷한 utiltiy 분포를 가지고 있어야 한다.
 
-|Metrics|Subject|Brief explain|objective|
-|------------------|---|---|---|
-|Skew|item, can be applied to user|분포가 어느 한쪽으로 쏠려서는 안된다. 누구는 조금 일하면서 많이 벌고, 누구는 많이 일하지만 조금 버는 것을 지양|maximin + minimax|
-|KL-divergence|item, can be applied to user|두 분포의 차이를 계산하는 대표적인 metric|lower|
-|NDKL|only item|1 to K까지 의 top-i ranking KL-div의 summation 기반|lower|
-|JS-divergence|item, can be applied to user|symmetric version of KL-div|lower|
-|Overall Disparity|item, can be applied to user|모든 그룹들 간의 p/p_f 비율 차를 계산한 후 average 계산|lower|
-|Generalized Cross entropy|both|두 확률분포가 서로 어떻게 다른가를 측정|higher|
-|L1-norm|item, can be applied to user|treat the merit and utility distributions as vectors and then use the L1-norm to calculate the distance|lower|
+|Metrics|Subject|details|
+|------------------|---|---|
+|Skew|item, can be applied to user|분포가 어느 한쪽으로 쏠려서는 안된다. 누구는 조금 일하면서 많이 벌고, 누구는 많이 일하지만 조금 버는 것을 지양|
+|KL-divergence|item, can be applied to user|두 분포의 차이를 계산하는 대표적인 metric|
+|NDKL|only item|1 to K까지 의 top-i ranking KL-div의 summation 기반|
+|JS-divergence|item, can be applied to user|symmetric version of KL-div|
+|Overall Disparity|item, can be applied to user|모든 그룹들 간의 p/p_f 비율 차를 계산한 후 average 계산|
+|Generalized Cross entropy|both|두 확률분포가 서로 어떻게 다른가를 측정|
+|L1-norm|item, can be applied to user|treat the merit and utility distributions as vectors and then use the L1-norm to calculate the distance|
 
 #### *<span style="color:#FFE6E6">Co 와 CA의 몇몇 metrics들은 서로 interconvertible 하다. </span>*
 
@@ -164,14 +164,14 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
    요약하면 다음과 같다.
 
-|Metrics|Subject|설명||
-|------------------|---|---|---|
-|Envy-free Fairness|Group|m-envy-free group num to entire group G 로 계산||
-|Envy-free Fairness|General|Envy-degree를 통해 계산|lower|
-|Metrics for Counterfactual Fairness(CF)||predict fairness-related attributes based on user embeddings because user embeddings are independetn from fairness-related attributes||
-|Metrics for Rawlsian Maximin Fairness (RMF)||utility of the worst case or bottom n%|higher|
-|Metrics for Maximin-shared Fairness(MSF)||proportion of individuals satisfying this condition, where the maximin share for every item is a constant value|higher|
-|Metrics for Process Fairness(PR)||fairness-related attributes 로부터 독립적인 fair representation을 측정한다.||
+|Metrics|Subject|details|
+|------------------|---|---|
+|Envy-free Fairness|Group|m-envy-free group num to entire group G 로 계산|
+|Envy-free Fairness|General|Envy-degree를 통해 계산|
+|Metrics for Counterfactual Fairness(CF)||predict fairness-related attributes based on user embeddings because user embeddings are independetn from fairness-related attributes|
+|Metrics for Rawlsian Maximin Fairness (RMF)||utility of the worst case or bottom n%|
+|Metrics for Maximin-shared Fairness(MSF)||proportion of individuals satisfying this condition, where the maximin share for every item is a constant value|
+|Metrics for Process Fairness(PR)||fairness-related attributes 로부터 독립적인 fair representation을 측정한다.|
 
 # **5. Methods**
 ---
@@ -198,11 +198,8 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
 추천 모델 자체를 수정하거나 optimization target을 변경해 fair representation을 높이는 방식. 데이터 지향 방식과 비교했을 때 더 직관적이다는 장점이 있다. 그렇지만 re-rank 과정에서 공정성이 저하될 수도 있다.
 
-<details>
-<summary>Regularization-based methods</summary>
+- Regularization-based methods
 
-<!-- summary -->
----
    흔히 알고 있는 모델에 regularization term을 주어 제약을 주는 방식.
    기본 Loss function에 fairness와 관련된 loss term을 추가해 
 
@@ -212,42 +209,28 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 
    Indirect 방식은 paper에서 자체적으로 정의한 Loss 를 넣는 방식이다. 주로 indirect 방식이 더 나은 결과를 보였다고 한다.
 
-</details>
+- Adversarial learning-based methods
 
-<details>
-<summary>Adversarial learning-based methods</summary>
-
-<!-- summary -->
----
    Generator와 discriminator 가 경쟁적으로 학습하는 그 방식이다. 한 가지 차이점은 Recommender system에서는 generator 대신 filter module을 둔다는 것이다. Filter module이 unfair information를 가리고, discriminator가 unfair information을 제거한 representation에 대해서 판별을 진행할 때, fair attribute을 구별해내지 못할 때야 공평성이 성립되었다고 볼 수 있다.
 
    Loss function은 일반적으로 아래와 같다.
 
    $ min_{R} \space max_{D} \space L(R,D) = L_{R} - \lambda L_{D}$
 
-</details>
+- Reinforcement learning-based methods
 
-<details>
-<summary>Reinforcement learning-based methods</summary>
-
-<!-- summary -->
----
    강화학습을 이용한 추천시스템의 공정성 구축은 다른 방법과 비교해서 장기적이고 유동적으로 학습을 할 수 있다는 점이다.
 
    강화학습에서처럼 agent가 fairness를 학습을 하면 fair reward를 극대화하는 방향으로 action과 state를 계속 update 한다. 그 다음에 critic network 가 이를 평가하는 방식으로, feedback과 update을 반복하다보면 fairness에 수렴한다는 아이디어이다.
 
    그러나 안정성이 떨어지고 offline-data를 가지고 평가하기는 어렵다는 단점도 있다.
 
-</details>
 
-<details>
-<summary>Others</summary>
 
-<!-- summary -->
----
+- Others
+
    use transfer learning, use contextual framework, add high var noise to VAE 등등의 방법을 사용 가능.
 
-</details>
 
 ## Re-ranking methods
 
