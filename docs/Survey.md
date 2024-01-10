@@ -172,7 +172,7 @@ Calibrated fairenss 측정 시에는 그룹의 merit 분포 $p_f(v_{i}) = \frac 
 |Metrics for Maximin-shared Fairness(MSF)||proportion of individuals satisfying this condition, where the maximin share for every item is a constant value|higher|
 |Metrics for Process Fairness(PR)||fairness-related attributes 로부터 독립적인 fair representation을 측정한다.||
 
-# **5. Method for Fair Recommendation**
+# **5. Methods**
 ---
 
 공정한 추천을 위해서 사용할 수 있는 메소드나 알고리즘은 어떤 것이 있을까?
@@ -268,7 +268,7 @@ Slot-wise 방식은 일반적으로 Greedy-algorithm을 사용하여 처음 주�
 
 User-wise 방식과 마찬가지로 최적화 알고리즘을 통해 유저에게 가장 최적화된 list를 제공해주는 방식은 비슷하다. 그러나 다수의 유저에게 동시다발적으로 다수의 리스트를 제공한다는 차이점이 있다. amortized fairness를 중시하는 관점으로서 제공된 리스트 그룹 전체의 분포가 공정한지에 더 초점을 두고있다.
 
-# **6. DATASETS FOR FAIRNESS RECOMMENDATION STUDY**
+# **6. Datasets**
 
 <img width="681" alt="스크린샷 2024-01-04 오후 2 26 47" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/f1c8721c-97bc-4e31-b459-64ec5bb19571">{:width= "90%", :height= "85%"}<br/>
 <span style="color:red"> 친절하게 실험에 사용된 데이터셋이 어떤 attribute을 포함하고 있는지 표로 정리 해놓으셨다 </span>
