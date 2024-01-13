@@ -51,10 +51,8 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 [Mult-VAE]: Mult_VAE.md
 [Survey Paper]: Survey.md
 
-<!-- [VAE]: VAE.md -->
 
-
-[install]: install.md
+<!-- [install]: install.md
 [upgrade]: upgrade.md
 [config]: config.md
 [basics]: basics.md
@@ -64,4 +62,4 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 [advanced]: advanced.md
 [LICENSE]: ../LICENSE.md
 [NOTICE]: ../NOTICE.md
-[CHANGELOG]: ../CHANGELOG.md
+[CHANGELOG]: ../CHANGELOG.md -->
