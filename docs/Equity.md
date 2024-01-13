@@ -92,7 +92,7 @@ item이 마땅히 받아야할 attention을 사용자로부터 온전히 받지 
 - Amortized fairness: single ranking list에서는 position bias 가 존재하므로 amortized list 들의 누적된 unfairness를 측정.
 - user-wise re-ranking -> ILP 사용
 
-# **1. Equity-of-attention Fairness**
+# **2. Equity of attention Fairness**
 ---
 Notations are as followed.
 
@@ -104,7 +104,13 @@ $ \frac{a_{i1}}{r_{1i}} = \frac{a_{i2}}{r_{12}}$
 
 그렇지만 position bias 때문에 한 single list에서는 위의 식을 만족시키는 불가능하다. 따라서 amoritzed definition을 사용하여 다시 정의한다면,
 
-$\frac{\sum^{m}_{l=1} a^{l}_{i1}}{\sum^{m}_{l=1}r^{l}_{1i}} = \frac{\sum^{m}_{l=1} a^{l}_{i2}}{\sum^{m}_{l=1}r^{l}_{12}}$ 
+$\frac{\sum_{l=1}^{m} a_{i1}^{l}}{\sum_{l=1}^{m} r^{l}_{1i}} = \frac{\sum_{l=1}^{m} a_{i2}^{l}}{\sum_{l=1}^{m} r_{12}^{l} }$ 
+
+위의 정의를 만족하기 위해서는 매 iteration 별로 ranking 순서를 변경해야한다. 그래서 만약 이번에 attention을 제대로 못 받았다면 돌아오는 다음 turn에 부족한 attention을 보충받을 수 있다고 이해할 수 있다.
+
+# **3. Ranking with Equity-of-attention**
+---
+
 
 
 
