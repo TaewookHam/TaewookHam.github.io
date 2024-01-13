@@ -34,7 +34,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 ## Fairness on Recommender Systems
 
 * [Survey Paper]{:.heading.flip-title} --- A Survey on the Fairness of Recommender Systems 
-
+* [Equity of Attention]{:.heading.flip-title} --- Equity of Attention: Amortizing Individual Fairness in Rankings
 {:.related-posts.faded}
 
 <!-- ## Other
@@ -50,6 +50,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 [NGCF]: NGCF.md
 [Mult-VAE]: Mult_VAE.md
 [Survey Paper]: Survey.md
+[Equity of Attention]: Equity.md
 
 
 <!-- [install]: install.md
