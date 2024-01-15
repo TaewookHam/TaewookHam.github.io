@@ -11,11 +11,11 @@ sitemap: false
 - Position bias란?
     > 기존의 연구들에 의하면, 사람들이 추천 시스템으로 부터 ranked-list 를 제공받은 경우 아이템과 유저의 상관관계는 rank가 낮아질 수록 linear 하게 감소하지만, 아이템이 사용자로 부터 받는 관심은 exponentional 하게 감소한다. 이로 부터 발생하는 편향을 position bias 라고 부르기로 한다.
 
-- Higher than rank k or position k
-    > 혼선을 방지하기 위해서 higher than rank k 라고 함은 1 부터 k-1 위 까지의 subject들을 의미함을 먼저 짚고 넘어간다.
+- Higher than rank k
+    > 혼선을 방지하기 위해서 'higher than rank k' 라고 함은 1 부터 k-1 위 까지의 subject들을 의미함을 먼저 짚고 넘어간다.
 
 - Score rating is proportional to Relevance 
-    > 이미 rating 이 relevance를 잘 반영한다는 가정하에 설명을 하겠다. 그리고 여기서 relevance가 merit, 즉 subject(item)의 worthiness를 결정한다고 가정한다.
+    > Rating 이 Relevance를 잘 반영한다는 가정하에 설명을 하겠다. 그리고 여기서 relevance가 merit, 즉 subject(item)의 worthiness를 결정한다고 가정한다.
 
 # **1. Introduction**
 ---
@@ -24,7 +24,9 @@ item이 가지고 있는 merit 에 비례해서 outcome value가 결정되어야
 item이 relevance에 따른 마땅히 받아야할 attention을 사용자로부터 온전히 받지 못했기 때문이다.
 
 <p>
-<img width="440" alt="스크린샷 2024-01-14 오전 12 19 55" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ef37d34b-3de0-4083-80aa-8aed5bf054e9" width="60%">
+<img width="440" alt="스크린샷 2024-01-14 오전 12 19 55" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ef37d34b-3de0-4083-80aa-8aed5bf054e9">
+{:width= "50%", height= "50%"}
+
 <img width="278" alt="image" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/45d4459e-f904-4ec2-92e1-757c4fd7c86b">
 </p>
 
@@ -50,7 +52,7 @@ $ \frac{a_{i1}}{r_{1i}} = \frac{a_{i2}}{r_{12}}$
 그렇지만 position bias 때문에 한 single list에서는 위의 식을 만족시키는 불가능하다. 따라서 amoritzed definition을 사용하여 다시 정의한다면,
 
 <img width="302" alt="스크린샷 2024-01-15 오후 4 40 49" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/6d3c0541-8c59-4947-83f8-ee7be6a9e19a">
-{width: "50%", height: "50%"}
+{:width= "50%", height= "50%"}
 
 위의 정의를 만족하기 위해서는 매 iteration 별로 ranking 순서를 변경해야한다. 그래서 만약 이번에 attention을 제대로 못 받았다면 돌아오는 다음 turn에 부족한 attention을 보충받을 수 있기 때문이다.
 
