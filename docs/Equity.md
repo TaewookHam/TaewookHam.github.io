@@ -45,15 +45,11 @@ single ranking list에서는 이미 position bias 가 존재하므로 랭킹 리
 # **2. Equity of attention Fairness**
 ---
 
-논문에서 언급한 fairness의 기준인 Calibrated fairness에 따르면 item이 relevance 에 비례하게 attention을 챙겨야 하므로, Definition을 다음과 같이 세울 수 있다.
-
-$ \frac{a_{i1}}{r_{1i}} = \frac{a_{i2}}{r_{12}}$
-
-그렇지만 position bias 때문에 한 single list에서는 위의 식을 만족시키는 불가능하다. 따라서 amoritzed definition을 사용하여 다시 정의한다면,
-
+논문에서 언급한 fairness의 기준인 Calibrated fairness에 따르면 item이 relevance 에 비례하게 attention을 챙겨야 한다. 그렇지만 position bias 때문에 한 single list에서는 위의 식을 만족시키는 불가능하다. 따라서 amoritzed definition을 사용하여 다시 정의한다면,
+<center>
 <img width="302" alt="스크린샷 2024-01-15 오후 4 40 49" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/6d3c0541-8c59-4947-83f8-ee7be6a9e19a">
 {:width= "50%", height= "50%"}
-
+</center>
 위의 정의를 만족하기 위해서는 매 iteration 별로 ranking 순서를 변경해야한다. 그래서 만약 이번에 attention을 제대로 못 받았다면 돌아오는 다음 turn에 부족한 attention을 보충받을 수 있기 때문이다.
 
 # **3. Ranking with Equity-of-attention**
@@ -69,23 +65,21 @@ DCG를 사용해 원래의 순위 $\rho$ 와 re-ranked 순위 $\rho^{*}$ 의 DCG
 잘 모르겠으면 아래의 출처를 확인
 [출처: https://data-scient2st.tistory.com/193]
 
-<h3>3.3 Optimizing fairness-quality tradeoffs</h3>
+### 3.3 Optimizing fairness-quality tradeoffs
 
 fairness와 quality 의 tradeoff 가 있다.(no free lunch!!)
 ranking quality에 constraint를 걸고 unfairness를 최소화 하는 방향으로 빌드업.
 
 ### 3.4 An ILP-based fair ranking mechanism
 
-l -th ranking 이라 함은 l번째 iteration을 의미!
-sequence of ranking이라는 것은 추천 리스트안에서의 순서가 아니라 몇번째 iteration이냐를 나타냄!
+$l$ 번째 ranking list를 re-rank 하는 과정에 있다고 가정하면,
+
 
 <img width="504" alt="스크린샷 2024-01-14 오전 2 08 16" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/069d34f9-38fb-4503-a63a-0d3b88d8f501">
 
 여기서 constraint 의 의미는 
 
 현재(누적x) 재배치된 X의 relevance가 가장 이상적인 배치의 DCG값의 최소한 $\theta$ % 는 만족해야한다.
-
-이다.
 
 그럼 여기서 드는 의문점 cumulative A_i와 R_i 를 넣어둘 리스트? 혹은 딕셔너리 같은 것이 있는가??
 
