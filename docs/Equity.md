@@ -25,9 +25,8 @@ item이 relevance에 따른 마땅히 받아야할 attention을 사용자로부�
 
 <p>
 <img width="440" alt="스크린샷 2024-01-14 오전 12 19 55" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/ef37d34b-3de0-4083-80aa-8aed5bf054e9">
-{:width= "50%", height= "50%"}
 
-<img width="278" alt="image" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/45d4459e-f904-4ec2-92e1-757c4fd7c86b">
+<img width="440" alt="image" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/45d4459e-f904-4ec2-92e1-757c4fd7c86b">
 </p>
 
 위의 이미지는 실험에서 사용한 Airbnb의 attention 과 relevance 의 top-10 분포이다. 사실 제네바 데이터들은 top 300 까지 거의 동일한 relevance를 가지고 있지만 대부분의 사용자 attention은 top 5 정도까지가 독식하는 것을 확인할 수 있다. 
