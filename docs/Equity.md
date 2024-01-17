@@ -99,18 +99,17 @@ k 개는 top-k high relevance score를 가지는 애들 먼저 뽑고, 나머지
 
 ## 4. Experiments
 ---
-- 왜 relevance가 linear 한 선으로 표기되는 것인가?
-    > fairness는 무시한 채 계속 같은 ranking state를 유지하므로 일정하게 unfairness가 쌓이기 때문이다.
+Synthetic data 부분만 살펴보자.
 
-- 왜 그래프에서는 $NDCG>=\theta$ 표기?
-    > 어차피 식 (3) 에서 오른쪽 IDCG를 왼쪽으로 넘기면 그게 $NDCG>= \theta$ 이므로 같은 표기라는 것을 알 수 있다.
+- 검은 선은 무엇인가?
+    > fairness는 완전히 무시하고 ranking quality 의 최대화를 목표로하며 iteration을 반복했을 때의 실험결과. 계속 같은 ranking state를 유지하므로 일정하면서 가파르게 unfairness가 증가한다.
 
 <img width="1297" alt="스크린샷 2024-01-15 오후 5 29 05" src="https://github.com/TaewookHam/TaewookHam.github.io/assets/117107025/f1bd9ce4-b21c-4fa5-9786-35fe888a79d1">
 
 결론만 얘기하자면, 
 
-- Uber 와 같이 1등이 모든 attention을 가져가는 경우는 Figure 3,4,5 를 보면된다. Uniform relevance 가 아니면 완전히 unfairness를 해결하기는 어려울 수도 있다. 
+- Singular attention 의 결과가 Figure 3,4,5 에 나타나 있다. 아래도 1등이 모든 attention을 가져가는 매우 불공평한 상태이기 때문에 unfairness 를 완전하게 통제하기는 어렵다는 것을 확인할 수 있었다.
 
-- Figure 6 혹은 7 이 Geometric attention을 가진 real-world의 상황과 가장 비슷한 환경에서 unfairness를 최소화한 것이라고 해석할 수 있다. 특히 Figure 8처럼 attention과 relevance의 분포가 비슷하다면, 높은 constraint 에도 unfairness를 줄일 수 있었다.
+- 우리의 처음 의도처럼 Figure 6,7,8 에서 geometric 한 attention을 iteration을 해주면 unfairness를 상당히 줄일 수 있었다.
 
 
