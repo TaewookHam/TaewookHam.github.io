@@ -35,6 +35,8 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 
 * [Survey Paper]{:.heading.flip-title} --- A Survey on the Fairness of Recommender Systems 
 * [Equity of Attention]{:.heading.flip-title} --- Equity of Attention: Amortizing Individual Fairness in Rankings
+* [Pairwise Comparisons]{:.heading.flip-title} --- Fairness in Recommendation Ranking through Pairwise Comparisons
+
 {:.related-posts.faded}
 
 <!-- ## Other
@@ -51,7 +53,7 @@ While this manual tries to be beginner-friendly, as a user of Jekyll it is assum
 [Mult-VAE]: Mult_VAE.md
 [Survey Paper]: Survey.md
 [Equity of Attention]: Equity.md
-
+[Pairwise Comparisons]: Pairwise.md
 
 <!-- [install]: install.md
 [upgrade]: upgrade.md
