@@ -1,12 +1,12 @@
-# About me # 
+# About me
 <!-- image -->
 <img src="/assets/img/myPhoto.jpg" alt="함태욱(Taewook Ham)">
 
 ## Personal
 ---
-## Taewook Ham(함태욱) ##
+### Taewook Ham(함태욱)
 **Undergraduate**, School of Electrical Engineering, KAIST
-- B.S.(expected 2024 Fall) at KAIST EE
+- B.S.(expected at 2024 Fall) at KAIST EE
 - Github: [https://github.com/TaewookHam](https://github.com/TaewookHam)
 - Email: htw0618@kaist.ac.kr
 

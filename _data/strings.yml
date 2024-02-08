@@ -40,8 +40,8 @@ search_placeholder:    Type something…
 loading:               Loading…
 redirecting:           Redirecting…
 
-continue_reading:      >
-  Continue reading <!--post_title-->
+# continue_reading:      >
+#   Continue reading <!--post_title-->
 
 cookies_banner:
   text:                >
@@ -74,7 +74,7 @@ last_modified_at:      'Last modified at'
 last_modified_at_icon: 'icon-history'
 colon:                 ':'
 separator:             '|'
-category_start:        'in '
+# category_start:        'in '
 category_spearator:    ' / '
 tag_start:             'on '
 tag_separator:         ', '
